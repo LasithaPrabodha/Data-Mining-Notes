@@ -88,5 +88,26 @@
 ### 21. **Curve Fitting**
 In the context of regression, curve fitting refers to finding the best-fitting curve (or line in the case of linear regression) that minimizes the error between predicted and actual values. In simple linear regression, this results in finding the best straight line to represent the relationship between input and output.
 
-### 22. **Multiple Linear Regression**
+### 22. Linear Regression
+  - **Simple Linear Regression:** Finds the line of best fit for a single input-output relationship using the formula $Y$ = $\beta_0$ + $\beta_1$ $X_1$.
+   - **Multiple Linear Regression:** Extends linear regression to multiple input features and models the relationship as $Y$ = $X$ $\beta$, where $X$ is a matrix of features and $\beta$ is the vector of coefficients.
+   - **Objective:** Minimize the Mean Squared Error (MSE) to find the best-fitting line (or hyperplane).
+
+#### Key Concepts in Linear Regression:
+   - **Modeling the relationship** between inputs and outputs.
+   - **Training the model** involves finding the best coefficients to minimize the error (MSE).
+   - **Prediction:** Once trained, you can use the model to predict new values.
+
+### 23. **Multiple Linear Regression**
    This is an extension of linear regression to handle multiple input features (i.e., \( $d > 1$ \)). The model predicts the output based on a combination of multiple input variables. The general form is $\( Y = X \beta \)$, where $\( X \)$ is a matrix of input features, and $\( \beta \)$ represents the coefficients.
+
+
+
+### 24. **Generative Models**: 
+  These models aim to learn the joint probability distribution $P(X, Y)$, modeling how the data is generated. They can generate new instances of data and handle missing values by learning about both input and output together. Examples include Naïve Bayes, Hidden Markov Models, and PCA.
+  
+### 25. **Discriminative Models**: 
+  These models focus on modeling the conditional probability $P(Y | X)$, distinguishing between different classes by learning the decision boundary between them. They don't attempt to model how the data is generated, and are typically more accurate for classification tasks. Examples include Logistic Regression, Support Vector Machines, and Decision Trees.
+
+### 26. **Mean Squared Error (MSE)**: 
+  This is a measure used to evaluate the performance of a model, particularly in regression tasks. It calculates the average of the squared differences between predicted values and actual values. The goal is to minimize this error, making the predictions as close to the actual values as possible.
