@@ -304,7 +304,7 @@ Y = X B
 
 Where:
 - $\(Y\)$ is the vector of outputs (size $\(n\)$ by 1),
-- $\(X\)$ is the design matrix (size $\(n\)$ by $\(d+1\)$), including a column of ones to account for the intercept $\(\beta_0\)$ and $\(d\)$ columns for the features $\(x_1, x_2, \dots, x_d\)$,
+- $\(X\)$ is the design matrix (size $\(n\)$ by ($d+1$\)), including a column of ones to account for the intercept $\(\beta_0\)$ and $\(d\)$ columns for the features $\(x_1, x_2, \dots, x_d\)$,
 - $\(B\)$ is the vector of coefficients (size $\(d+1\)$ by 1), where each element corresponds to a specific parameter: $\(\beta_0, \beta_1, \dots, \beta_d\)$.
 
 So, the matrix form of the equation is:
@@ -333,7 +333,7 @@ y_n
 
 Here:
 - $\(Y\)$ is a column vector containing the actual output values for all data points.
-- $\(X\)$ is the design matrix, where the first column is all 1's (for the intercept term $\(\beta_0\)$), and the remaining columns are the feature values.
+- $\(X\)$ is the design matrix, where the first column is all 1's (for the intercept term \($\beta_0$\)), and the remaining columns are the feature values.
 - $\(B\)$ is the vector of coefficients (the parameters we want to estimate).
 
 ### Objective: Minimize the Cost Function
@@ -444,7 +444,7 @@ J(B) = \frac{1}{2n} \sum_{i=1}^{n} \left( (y_{i1} - \hat{y}_{i1})^2 + (y_{i2} - 
 
 Where:
 - $y_{i1}$ and $y_{i2}$ are the actual values for the $i$-th data point,
-- $\hat{y}_{i1}$ and $\hat{y}_{i2}$  are the predicted values for the $i$-th data point.
+- $`\hat{y}_{i1}`$ and $\hat{y}_{i2}$  are the predicted values for the $i$-th data point.
 
 In matrix form, this can be written as:
 
@@ -453,7 +453,7 @@ J(B) = \frac{1}{2n} \left( Y - X B \right)^T \left( Y - X B \right)
 ```
 
 Where:
-- $Y$ is the matrix of actual outputs \($n \times 2$\)),
+- $Y$ is the matrix of actual outputs \($n \times 2$\),
 - $X$ is the design matrix \($n$ $\times$ ($d+1$)\),
 - $B$ is the matrix of coefficients \($(d+1) \times 2$\).
 
