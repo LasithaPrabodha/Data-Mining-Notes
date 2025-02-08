@@ -213,7 +213,7 @@ Here:
 - $\beta_1, \beta_2, \dots, \beta_d$ are the coefficients (slopes) for each input variable.
 - $x_1, x_2, \dots, x_d$ are the input features (the data you have for each observation).
 
-## Example in 2D Space (Simple Case) - Case 1:
+## Simple Linear Regression (1D Case)
 
 Let’s start with a simple example where there is just one input variable (like $x_1$) and one output variable $y$ (i.e., $d = 1$ and $m = 1$).
 
@@ -286,7 +286,7 @@ This means that for every increase of 1 in $x_1$, $y$ increases by 1.2 units, st
 
 Linear regression is a simple yet powerful method for predicting continuous values. It works by finding the line (or curve in higher dimensions) that best fits the data, minimizing the errors between predicted and actual values. The process of training the model involves adjusting parameters to minimize the error and make the best possible predictions.
 
-## Case 2: 
+## Multiple Linear Regression (Higher-Dimensional Case)
  
 When $x_i$ $\in$ $\mathbb{R}^{d}$ and $Y_i$ $\in$ $\mathbb{R}$.
 
@@ -385,7 +385,7 @@ In summary:
 
 This formula is the core of multiple linear regression, and it allows you to compute the coefficients that give the best fit to your data.
 
-## Case 3:
+## Multiple-Output Regression
 
 This case describes an extension of the previous **multiple linear regression** to a situation where you have **multiple outputs** (i.e., \($Y$ $\in$ $\mathbb{R}^{n \times 2}$)) instead of just a single output. This type of model is also known as **multivariate linear regression**.
 
