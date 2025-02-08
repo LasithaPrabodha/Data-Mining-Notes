@@ -223,7 +223,7 @@ The model would look like this:
 Y = \beta_0 + \beta_1 x_1
 ``` 
 
-This equation means that $Y$ (the output) is a straight line that depends on the input $x_1$. The term \(\$beta_0$\) is the starting point (the intercept) on the $\(y\)$-axis when $\(x_1 = 0\)$, and $\(\beta_1\)$ is the slope of the line, which tells us how much $Y$ changes when $\(x_1\)$ changes.
+This equation means that $Y$ (the output) is a straight line that depends on the input $x_1$. The term \($\beta_0\$) is the starting point (the intercept) on the $\(y\)$-axis when $\(x_1 = 0\)$, and $\(\beta_1\)$ is the slope of the line, which tells us how much $Y$ changes when $\(x_1\)$ changes.
 
 ### Training the Model
 
