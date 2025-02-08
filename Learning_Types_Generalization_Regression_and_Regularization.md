@@ -10,18 +10,18 @@ Supervised learning refers to the scenario where we have labeled data, meaning t
 
 In classification, the goal is to predict a category or class label from the data. For example, determining whether an email is spam or not, based on features like words used in the email.
 
-- **Classification** is used when the target variable (Y) is **categorical** (e.g., spam or not spam).
-- The output Y can take one of a finite set of values (classes).
+- **Classification** is used when the target variable $Y$ is **categorical** (e.g., spam or not spam).
+- The output $Y$ can take one of a finite set of values (classes).
   
 ##### Formula:
 
-If we have a dataset $\( D \)$ with features $\( X = \{ x_1, x_2, ..., x_n \} \)$ and a target label $\( Y \)$ that belongs to a set of classes $\( C = \{c_1, c_2, ..., c_k \} \)$, then the task is to find a function $\( f(X) \)$ that maps $\( X \)$ to one of the classes $\( c \)$.
+If we have a dataset $D$ with features $X = \{ x_1, x_2, ..., x_n \}$ and a target label $Y$ that belongs to a set of classes $C = \{c_1, c_2, ..., c_k \}$, then the task is to find a function $f(X)$ that maps $X$ to one of the classes $c$.
 
 Mathematically, the problem is:
 ```math
 f: X \rightarrow C
 ```
-where $\( f \)$ is the classification function, and $\( C \)$ is the set of possible class labels.
+where $f$ is the classification function, and $C$ is the set of possible class labels.
 
 Common algorithms for classification:
 - Logistic Regression
@@ -33,28 +33,28 @@ Common algorithms for classification:
 
 In regression, the objective is to predict a continuous value (real number). For example, predicting the price of a house based on its features (square footage, number of bedrooms, etc.).
 
-- **Regression** is used when the target variable $\( Y \)$ is **continuous**.
+- **Regression** is used when the target variable $Y$ is **continuous**.
 - The output Y is a real number, and we aim to approximate the relationship between the input features and the continuous target.
 
 ##### Formula:
 
-Given a dataset $\( D \)$ with features $\( X = \{ x_1, x_2, ..., x_n \} \)$ and continuous target values $\( Y \)$, the objective is to learn a function $\( f(X) \)$ that predicts a continuous value for Y.
+Given a dataset $D$ with features $X = \{ x_1, x_2, ..., x_n \}$ and continuous target values $Y$, the objective is to learn a function $f(X)$ that predicts a continuous value for Y.
 
 Mathematically:
 ```math
 f: X \rightarrow Y
 ``` 
-where $\( Y \)$ is a continuous variable.
+where $Y$ is a continuous variable.
 
 In linear regression, for example, the model would look like this:
 ```math
 y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_n x_n + \epsilon
 ``` 
 where:
-- $\( y \)$ is the predicted continuous value (e.g., house price),
-- $\( x_1, x_2, ..., x_n \)$ are the features (e.g., square footage, number of bedrooms),
-- $\( \beta_0, \beta_1, ..., \beta_n \)$ are the coefficients (parameters) that we learn from the data,
-- $\( \epsilon \)$ is the error term (difference between predicted and actual value).
+- $y$ is the predicted continuous value (e.g., house price),
+- $x_1, x_2, ..., x_n$ are the features (e.g., square footage, number of bedrooms),
+- $\beta_0, \beta_1, ..., \beta_n$ are the coefficients (parameters) that we learn from the data,
+- $\epsilon$ is the error term (difference between predicted and actual value).
 
 Common algorithms for regression:
 - Linear Regression
@@ -73,20 +73,20 @@ In clustering, the goal is to group similar data points together, so that points
 - **Clustering** algorithms do not rely on labels.
 - The output is a grouping of data points based on similarity.
 
-One of the most common clustering algorithms is **k-means**. The idea is to partition data points into $\( k \)$ clusters, where each cluster is represented by the mean (centroid) of the points in that cluster.
+One of the most common clustering algorithms is **k-means**. The idea is to partition data points into $k$ clusters, where each cluster is represented by the mean (centroid) of the points in that cluster.
 
 ##### Formula for k-means:
-1. Choose $\( k \)$ initial centroids (randomly or using some heuristic).
+1. Choose $k$ initial centroids (randomly or using some heuristic).
 2. Assign each data point to the nearest centroid:
 ```math
 c_i = \arg \min_{j} \| x_i - \mu_j \|^2
 ``` 
-where $\( \mu_j \)$ is the centroid of cluster $\( j \)$, and $\( x_i \)$ is a data point.
+where $\mu_j$ is the centroid of cluster $j$, and $x_i$ is a data point.
 3. Recalculate the centroids by averaging the points in each cluster:
 ```math
 \mu_j = \frac{1}{|C_j|} \sum_{i \in C_j} x_i
 ``` 
-where $\( C_j \)$ is the set of points assigned to cluster $\( j \)$, and $\( |C_j| \)$ is the number of points in cluster $\( j \)$.
+where $C_j$ is the set of points assigned to cluster $j$, and $|C_j|$ is the number of points in cluster $j$.
 
 ### 3. **Reinforcement Learning (for reward-based data)**
 
@@ -119,24 +119,24 @@ Generative and discriminative models are two fundamental approaches in machine l
 
 ### **Generative Models**
 
-Generative models focus on understanding the *underlying process* that generates the data. In other words, these models aim to model the joint probability distribution of the input features $\(X\)$ and the output labels $\(Y\)$.
+Generative models focus on understanding the *underlying process* that generates the data. In other words, these models aim to model the joint probability distribution of the input features $X$ and the output labels $Y$.
 
 #### **Key Concepts:**
-- **Joint Probability Distribution:** Generative models estimate the joint probability $\(P(X, Y)\)$, which represents how likely the input $\(X\)$ and the output $\(Y\)$ are to occur together. From this, they can also calculate the conditional probability $\(P(Y|X)\)$ using **Bayes' Theorem**:
+- **Joint Probability Distribution:** Generative models estimate the joint probability $P(X, Y)$, which represents how likely the input $X$ and the output $Y$ are to occur together. From this, they can also calculate the conditional probability $P(Y|X)$ using **Bayes' Theorem**:
   
   ![image](https://github.com/user-attachments/assets/832a2221-d643-4aea-81b0-e62872b46edb)
 
   
   Here:
-  - $\(P(Y|X)\)$ is the posterior probability (what we're interested in: the probability of $\(Y\)$ given $\(X\$)),
-  - $\(P(X|Y)\)$ is the likelihood (how likely the data $\(X\)$ is given the label $\(Y\)$),
-  - $\(P(Y)\)$ is the prior probability (how likely label $\(Y\)$ is before observing $\(X\)$),
-  - $\(P(X)\)$ is the marginal likelihood (the total probability of the data).
+  - $P(Y|X)$ is the posterior probability (what we're interested in: the probability of $Y$ given $X$),
+  - $P(X|Y)$ is the likelihood (how likely the data $X$ is given the label $Y$),
+  - $P(Y)$ is the prior probability (how likely label $Y$ is before observing $X$),
+  - $P(X)$ is the marginal likelihood (the total probability of the data).
   
 - **Modeling the Data:** Generative models try to learn how the data is generated, which allows them to simulate new instances of data. By modeling both the input and output together, these models can handle missing data or generate new samples (for example, in image generation tasks).
 
 #### **Example Algorithms:**
-1. **Naïve Bayes:** Assumes that the features $\(X\)$ are conditionally independent given the class $\(Y\)$. This simplifies the computation of $\(P(X|Y)\)$, allowing for efficient classification. Despite its simplicity, Naïve Bayes can perform well for certain tasks like text classification.
+1. **Naïve Bayes:** Assumes that the features $X$ are conditionally independent given the class $Y$. This simplifies the computation of $P(X|Y)$, allowing for efficient classification. Despite its simplicity, Naïve Bayes can perform well for certain tasks like text classification.
 2. **Hidden Markov Models (HMM):** Used for sequential data (like time series or speech), where the system is assumed to be a Markov process with hidden states. The model learns the transitions between these hidden states and generates observations accordingly.
 3. **Dimensionality Reduction Techniques (e.g., PCA):** These techniques try to model how the data is distributed in high-dimensional space and reduce it to a lower-dimensional representation. While they focus on the data generation process, they can be used for feature extraction in classification tasks.
 
@@ -145,22 +145,22 @@ Generative models focus on understanding the *underlying process* that generates
 - Provide insight into how data is distributed across different classes.
   
 #### **Disadvantages:**
-- Sensitive to outliers, since these models learn the entire distribution, and outliers can skew the estimates of $\(P(X|Y)\)$ and $\(P(Y)\)$.
+- Sensitive to outliers, since these models learn the entire distribution, and outliers can skew the estimates of $P(X|Y)$ and $P(Y)$.
 - Can be computationally intensive, especially when modeling complex distributions.
 
 ### **Discriminative Models**
 
-Discriminative models, on the other hand, focus on directly learning the decision boundary between classes. These models do not attempt to model the data generation process; instead, they focus on modeling the conditional probability $\(P(Y|X)\)$, which is the probability of the label $\(Y\)$ given the input $\(X\)$.
+Discriminative models, on the other hand, focus on directly learning the decision boundary between classes. These models do not attempt to model the data generation process; instead, they focus on modeling the conditional probability $P(Y|X)$, which is the probability of the label $Y$ given the input $X$.
 
 #### **Key Concepts:**
-- **Conditional Probability:** Discriminative models directly estimate $\(P(Y|X)\)$, the probability that a given input $\(X\)$ belongs to a particular class $\(Y\)$. By modeling this directly, discriminative models can make more accurate predictions because they focus only on distinguishing between classes rather than modeling how the data is generated.
+- **Conditional Probability:** Discriminative models directly estimate $P(Y|X)$, the probability that a given input $X$ belongs to a particular class $Y$. By modeling this directly, discriminative models can make more accurate predictions because they focus only on distinguishing between classes rather than modeling how the data is generated.
   
-  Unlike generative models, discriminative models **do not attempt to model $\(P(X)\)$**, the distribution of the data, and therefore they focus only on the class boundaries.
+  Unlike generative models, discriminative models **do not attempt to model $P(X)$**, the distribution of the data, and therefore they focus only on the class boundaries.
 
 - **Learning Decision Boundaries:** Discriminative models essentially "draw" a decision boundary in the feature space that separates different classes. This boundary minimizes classification error by maximizing the margin between classes (in the case of SVMs) or directly optimizing for the likelihood of correct classification (in the case of logistic regression).
 
 #### **Example Algorithms:**
-1. **Logistic Regression:** A linear model for binary classification, where the output is modeled as a logistic (sigmoid) function of the input features. It directly estimates $\(P(Y=1|X)\)$ for binary outcomes.
+1. **Logistic Regression:** A linear model for binary classification, where the output is modeled as a logistic (sigmoid) function of the input features. It directly estimates $P(Y=1|X)$ for binary outcomes.
 2. **Support Vector Machines (SVM):** A classifier that tries to find the optimal hyperplane that maximizes the margin between the classes in the feature space. SVMs are effective in high-dimensional spaces and are robust to overfitting, especially with a small number of training examples.
 3. **Decision Trees:** A hierarchical model that recursively splits the feature space based on feature values to separate the classes. It is a powerful and interpretable model for classification tasks.
 4. **Random Forest:** An ensemble of decision trees that aggregates the predictions of multiple trees to improve accuracy and reduce overfitting.
@@ -177,7 +177,7 @@ Discriminative models, on the other hand, focus on directly learning the decisio
 
 | **Aspect**                        | **Generative Models**                                  | **Discriminative Models**                               |
 |-----------------------------------|--------------------------------------------------------|--------------------------------------------------------|
-| **Focus**                         | Models the joint distribution $\(P(X, Y)\)$               | Models the conditional distribution $\(P(Y\|X)\)$          |
+| **Focus**                         | Models the joint distribution $P(X, Y)$               | Models the conditional distribution $P(Y\|X)$          |
 | **Key Objective**                 | Explains how data was generated                        | Classifies data by finding a decision boundary          |
 | **Example Algorithms**            | Naïve Bayes, HMM, PCA, Dimensionality Reduction         | Logistic Regression, SVM, Decision Trees, Random Forest |
 | **Robustness to Outliers**        | Sensitive to outliers                                  | More robust to outliers                                |
@@ -208,14 +208,14 @@ The general form of a linear regression model is:
 ``` 
 
 Here:
-- $\(\hat{y}\)$ is the predicted output (the value you want to estimate).
-- $\(\beta_0\)$ is the intercept (the value of \(y\) when all inputs are zero).
-- $\(\beta_1, \beta_2, \dots, \beta_d\)$ are the coefficients (slopes) for each input variable.
-- $\(x_1, x_2, \dots, x_d\)$ are the input features (the data you have for each observation).
+- $\hat{y}$ is the predicted output (the value you want to estimate).
+- $\beta_0$ is the intercept (the value of $y$ when all inputs are zero).
+- $\beta_1, \beta_2, \dots, \beta_d$ are the coefficients (slopes) for each input variable.
+- $x_1, x_2, \dots, x_d$ are the input features (the data you have for each observation).
 
 ## Example in 2D Space (Simple Case) - Case 1:
 
-Let’s start with a simple example where there is just one input variable (like \($x_1$\)) and one output variable $\(y\)$ (i.e., \($d = 1$\) and \($m = 1$\)).
+Let’s start with a simple example where there is just one input variable (like $x_1$) and one output variable $y$ (i.e., $d = 1$ and $m = 1$).
 
 The model would look like this:
 
@@ -223,7 +223,7 @@ The model would look like this:
 Y = \beta_0 + \beta_1 x_1
 ``` 
 
-This equation means that $\(Y\)$ (the output) is a straight line that depends on the input \($x_1$\). The term \(\$beta_0$\) is the starting point (the intercept) on the $\(y\)$-axis when $\(x_1 = 0\)$, and $\(\beta_1\)$ is the slope of the line, which tells us how much $\(Y\)$ changes when $\(x_1\)$ changes.
+This equation means that $Y$ (the output) is a straight line that depends on the input $x_1$. The term \(\$beta_0$\) is the starting point (the intercept) on the $\(y\)$-axis when $\(x_1 = 0\)$, and $\(\beta_1\)$ is the slope of the line, which tells us how much $Y$ changes when $\(x_1\)$ changes.
 
 ### Training the Model
 
@@ -347,8 +347,8 @@ J(B) = \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 ```
 
 Where:
-- $\(y_i\)$ is the actual value for the $\(i\)$-th data point,
-- $\(\hat{y}_i = X_i B\)$ is the predicted value for the $\(i\)$-th data point (using the current estimate of $\(B\)$).
+- $y_i$ is the actual value for the $i$-th data point,
+- $\hat{y}_i = X_i B$ is the predicted value for the $i$-th data point (using the current estimate of $B$).
 
 Since the model $\(Y = X B\)$ uses matrix notation, we can rewrite the cost function in matrix form as:
 
@@ -367,18 +367,125 @@ B = (X^T X)^{-1} X^T Y
 ```
 
 #### Explanation:
-- $\(X^T\)$ is the transpose of the matrix $\(X\)$.
-- $\(X^T X\)$ is the matrix product of $\(X^T\)$ and $\(X\)$, which is a square matrix of size $\( (d+1) \times (d+1) \)$.
-- $\((X^T X)^{-1}\)$ is the inverse of the matrix $\(X^T X\)$, and it exists as long as $\(X^T X\)$ is **non-singular** (i.e., it has full rank).
-- $\(X^T Y\)$ is the matrix product of $\(X^T\)$ and the vector $\(Y\)$, which gives a vector of size $\( (d+1) \times 1 \)$.
+- $X^T$ is the transpose of the matrix $X$.
+- $X^T X$ is the matrix product of $X^T$ and $X$, which is a square matrix of size ($d+1$) $\times$ ($d+1$).
+- $(X^T X)^{-1}$ is the inverse of the matrix $X^T X$, and it exists as long as $X^T X$ is **non-singular** (i.e., it has full rank).
+- $X^T Y$ is the matrix product of $X^T$ and the vector $Y$, which gives a vector of size $(d+1)$ $\times$ $1$.
 
-So, by multiplying $\((X^T X)^{-1} X^T Y\)$, we get the vector $\(B\)$ that minimizes the cost function and provides the **best-fit** coefficients for the regression model.
+So, by multiplying $(X^T X)^{-1} X^T Y$, we get the vector $B$ that minimizes the cost function and provides the **best-fit** coefficients for the regression model.
 
 ### Conclusion
 
 In summary:
-1. **Model**: $\(Y = X B\)$, where $\(Y\)$ is the output, $\(X\)$ is the design matrix, and $\(B\)$ is the vector of coefficients.
-2. **Cost Function**: The objective is to minimize $\(J(B) = \frac{1}{2n} (Y - X B)^T (Y - X B)\)$, the Mean Squared Error between the actual and predicted values.
-3. **Solution**: The optimal coefficients $\(B\)$ are found using the formula $\(B = (X^T X)^{-1} X^T Y\)$.
+1. **Model**: $Y = X B$, where $Y$ is the output, $X$ is the design matrix, and $B$ is the vector of coefficients.
+2. **Cost Function**: The objective is to minimize $J(B) = \frac{1}{2n} (Y - X B)^T (Y - X B)$, the Mean Squared Error between the actual and predicted values.
+3. **Solution**: The optimal coefficients $\(B\)$ are found using the formula $B = (X^T X)^{-1} X^T Y$.
 
 This formula is the core of multiple linear regression, and it allows you to compute the coefficients that give the best fit to your data.
+
+## Case 3:
+
+This case describes an extension of the previous **multiple linear regression** to a situation where you have **multiple outputs** (i.e., \($Y$ $\in$ $\mathbb{R}^{n \times 2}$\)) instead of just a single output. This type of model is also known as **multivariate linear regression**.
+
+### Notation and Setup
+
+- You have $n$ data points, each with $d$ features.
+- Each data point has **2 output values** (so $Y$ is now a matrix of size \($n \times 2$\)).
+- Each output value corresponds to a vector in $\mathbb{R}^2$, so the target output for each data point is a pair of values $\(y_{i1}, y_{i2}\)$.
+
+### Model Representation
+
+The linear model is:
+
+```math
+Y = X B
+```
+
+Where:
+- $Y$ is the matrix of outputs (size $n \times 2$\),
+- $X$ is the **design matrix** (size $n$ $\times$ ($d+1$)\), which includes a column of ones (for the intercept term \($\beta_0\$)) and $\(d\)$ columns for the input features \($x_1$, $x_2$, $\dots$, $x_d$\),
+- $B$ is the coefficient matrix (size \($d+1$) $\times$ $2$\) where each column corresponds to the coefficients of one of the two output variables.
+
+The equation can be written as:
+
+```math
+\begin{bmatrix}
+y_{11} & y_{12} \\
+y_{21} & y_{22} \\
+\vdots & \vdots \\
+y_{n1} & y_{n2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & x_{11} & x_{12} & \dots & x_{1d} \\
+1 & x_{21} & x_{22} & \dots & x_{2d} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & x_{n1} & x_{n2} & \dots & x_{nd}
+\end{bmatrix}
+\begin{bmatrix}
+\beta_{10} & \beta_{20} \\
+\beta_{11} & \beta_{21} \\
+\vdots & \vdots \\
+\beta_{1d} & \beta_{2d}
+\end{bmatrix}
+```
+
+Where:
+- Each $y_{i1}$ and $y_{i2}$ represent the two outputs for the $\(i\)$-th data point,
+- The matrix $B$ contains the coefficients that will be estimated.
+
+### Objective: Minimize the Cost Function
+
+The cost function (also known as the loss function) measures how well the model's predictions match the actual outputs. The cost function for this model is the **Mean Squared Error (MSE)**, given by:
+
+```math
+J(B) = \frac{1}{2n} \sum_{i=1}^{n} \left( (y_{i1} - \hat{y}_{i1})^2 + (y_{i2} - \hat{y}_{i2})^2 \right)
+```
+
+Where:
+- $y_{i1}$ and $y_{i2}$ are the actual values for the $i$-th data point,
+- $\hat{y}_{i1}$ and $\hat{y}_{i2}$  are the predicted values for the $i$-th data point.
+
+In matrix form, this can be written as:
+
+```math
+J(B) = \frac{1}{2n} \left( Y - X B \right)^T \left( Y - X B \right)
+```
+
+Where:
+- $Y$ is the matrix of actual outputs \($n \times 2$\)),
+- $X$ is the design matrix \($n$ $\times$ ($d+1$)\),
+- $B$ is the matrix of coefficients \($(d+1) \times 2$\).
+
+### Minimizing the Cost Function
+
+The goal of linear regression is to find the value of $B$ that minimizes the cost function $J(B)$. To do this, we take the derivative of $J(B)$ with respect to $B$ and set it equal to zero. This yields the solution:
+
+```math
+B = (X^T X)^{-1} X^T Y
+```
+
+#### Explanation:
+- $X^T$ is the transpose of the matrix $X$,
+- $X^T X$ is the matrix product of $X^T$ and $X$, which results in a square matrix of size $\(d+1) \times (d+1)$,
+- $\(X^T X)^{-1}$ is the inverse of $X^T X$ (it must be invertible for this solution to exist),
+- $X^T Y$ is the matrix product of $X^T$ and $Y$, which is a matrix of size $\(d+1) \times 2$.
+
+The result is that the coefficient matrix $B$ (of size \($d+1$) $\times$ 2\) can be computed using the formula:
+
+```math
+B = (X^T X)^{-1} X^T Y
+```
+
+### How the Formula Works
+
+The formula $\(X^T X)^{-1} X^T Y$ gives you the optimal values for the coefficient matrix $B$ by minimizing the squared differences between the predicted and actual values. Since there are two output variables, $B$ has two columns, each corresponding to the coefficients for one of the output variables.
+
+### Conclusion
+
+To summarize:
+1. **Model**: The linear model is $Y = X B$, where $Y$ is the matrix of outputs, $X$ is the design matrix, and $B$ is the coefficient matrix.
+2. **Cost Function**: The goal is to minimize the Mean Squared Error, $J(B)$, between the predicted and actual outputs.
+3. **Solution**: The optimal coefficients are computed using the formula $B = (X^T X)^{-1} X^T Y$.
+
+This approach allows you to estimate the coefficients for multiple output variables at once, and it works similarly to the single-output case, except that the coefficient matrix $B$ has multiple columns, one for each output variable.
