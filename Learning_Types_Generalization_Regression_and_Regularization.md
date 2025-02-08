@@ -223,40 +223,40 @@ The model would look like this:
 Y = \beta_0 + \beta_1 x_1
 ``` 
 
-This equation means that $Y$ (the output) is a straight line that depends on the input $x_1$. The term \($\beta_0\$) is the starting point (the intercept) on the $\(y\)$-axis when $\(x_1 = 0\)$, and $\(\beta_1\)$ is the slope of the line, which tells us how much $Y$ changes when $\(x_1\)$ changes.
+This equation means that $Y$ (the output) is a straight line that depends on the input $x_1$. The term $\beta_0\$ is the starting point (the intercept) on the $y$-axis when $x_1 = 0$, and $\beta_1$ is the slope of the line, which tells us how much $Y$ changes when $x_1$ changes.
 
 ### Training the Model
 
-To use this equation to make predictions, we need to find the best values for $\(\beta_0\)$ and $\(\beta_1\)$. This is where the **training data** comes in. You have a set of real data points with known values of $\(x_1\)$ (inputs) and $\(y\)$ (outputs). Your goal is to find $\(\beta_0\)$ and $\(\beta_1\)$ such that the line fits the data as well as possible.
+To use this equation to make predictions, we need to find the best values for $\beta_0$ and $\beta_1$. This is where the **training data** comes in. You have a set of real data points with known values of $x_1$ (inputs) and $y$ (outputs). Your goal is to find $\beta_0$ and $\beta_1$ such that the line fits the data as well as possible.
 
-To do this, we use a method called **Least Squares Estimation**, which minimizes the difference between the predicted values and the actual values of $\(y\)$ (the real data points).
+To do this, we use a method called **Least Squares Estimation**, which minimizes the difference between the predicted values and the actual values of $y$ (the real data points).
 
 ### Mean Squared Error (MSE)
 
-The difference between the predicted value $\(\hat{y}\)$ and the actual value (\$y$\) is called the **error**. To measure how well our model fits the data, we use **Mean Squared Error (MSE)**, which is calculated as:
+The difference between the predicted value $\hat{y}$ and the actual value $y$ is called the **error**. To measure how well our model fits the data, we use **Mean Squared Error (MSE)**, which is calculated as:
 
 ```math
 MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 ``` 
 
 Where:
-- $\(n\)$ is the total number of data points,
-- $\(y_i\)$ is the actual value of the output for the $\(i\)$-th data point,
-- $\(\hat{y}_i\)$ is the predicted value for the $\(i\)$-th data point.
+- $n$ is the total number of data points,
+- $y_i$ is the actual value of the output for the $i$-th data point,
+- $\hat{y}_i$ is the predicted value for the $i$-th data point.
 
 The MSE calculates the average of the squared differences between the actual values and the predicted values. The reason we square the differences is to ensure that both positive and negative errors are treated equally, and also to penalize larger errors more.
 
 ### Goal: Minimize the MSE
 
-The goal of linear regression is to adjust $\(\beta_0\)$ and $\(\beta_1\)$ so that the MSE is as small as possible. In other words, we want the predicted values $\(\hat{y}_i\)$ to be as close as possible to the actual values $\(y_i\)$.
+The goal of linear regression is to adjust $\beta_0$ and $\beta_1$ so that the MSE is as small as possible. In other words, we want the predicted values $\hat{y}_i$ to be as close as possible to the actual values $y_i$.
 
 ### After Training: Predictions
 
-Once we have the best values for $\(\beta_0\)$ and $\(\beta_1\)$ (the ones that minimize the MSE), we can use the equation $\(Y = \beta_0 + \beta_1 x_1\)$ to make predictions on new data. For any new value of $\(x_1\)$, you can plug it into the equation and get the predicted $\(y\)$ value.
+Once we have the best values for $\beta_0$ and $\beta_1$ (the ones that minimize the MSE), we can use the equation $Y$ = $\beta_0$ + $\beta_1$ $x_1$ to make predictions on new data. For any new value of $x_1$, you can plug it into the equation and get the predicted $y$ value.
 
 ### Recap of Steps:
-1. **Define the model:** $\( Y = \beta_0 + \beta_1 x_1 \)$.
-2. **Train the model:** Find $\(\beta_0\)$ and $\(\beta_1\)$ that minimize the MSE, i.e., minimize the difference between the predicted and actual $\(y\)$ values.
+1. **Define the model:** $Y$ = $\beta_0$ + $\beta_1$ $x_1$.
+2. **Train the model:** Find $\beta_0$ and $\beta_1$ that minimize the MSE, i.e., minimize the difference between the predicted and actual $y$ values.
 3. **Make predictions:** Once the model is trained, use it to predict the output for new input values.
 
 ### Why is it called "Curve Fitting"?
@@ -265,9 +265,9 @@ Linear regression is also known as **curve fitting** because it fits a curve (or
 
 ### Simple Example:
 
-Suppose you have the following data points for $\(x_1\)$ and $\(y\)$:
+Suppose you have the following data points for $x_1$ and $y$:
 
-| $\(x_1\)$ | $\(y\)$ |
+| $x_1$ | $y$ |
 |--------|------|
 | 1      | 2    |
 | 2      | 3    |
@@ -280,20 +280,22 @@ You would use linear regression to find the best line that fits these points. Af
 \hat{y} = 1 + 1.2 x_1
 ``` 
 
-This means that for every increase of 1 in $\(x_1\)$, $\(y\)$ increases by 1.2 units, starting from a value of 1 when $\(x_1 = 0\)$.
+This means that for every increase of 1 in $x_1$, $y$ increases by 1.2 units, starting from a value of 1 when $x_1 = 0$.
 
 ### Conclusion
 
 Linear regression is a simple yet powerful method for predicting continuous values. It works by finding the line (or curve in higher dimensions) that best fits the data, minimizing the errors between predicted and actual values. The process of training the model involves adjusting parameters to minimize the error and make the best possible predictions.
 
 ## Case 2: 
+ 
+When $x_i$ $\in$ $\mathbb{R}^{d}$ and $Y_i$ $\in$ $\mathbb{R}$.
 
-This case is an extension of linear regression to handle multiple input features (i.e., \($d > 1$\)), making it a **multiple linear regression** problem.
+This case is an extension of linear regression to handle multiple input features (i.e., $d > 1$), making it a **multiple linear regression** problem.
 
 ### Setup and Notation
 
-- You have $\(n\)$ data points, each with $\(d\)$ features. For each data point $\(i\)$, the input $\(x_i\)$ is a vector in $\( \mathbb{R}^d \)$, and the output $\(y_i\)$ is a scalar in $\( \mathbb{R} \)$.
-- We represent the input data as a matrix $\(X\)$, where each row corresponds to a data point, and each column corresponds to a specific feature. The vector $\(y\)$ contains the corresponding output values.
+- You have $n$ data points, each with $d$ features. For each data point $i$, the input $x_i$ is a vector in $\mathbb{R}^d$, and the output $y_i$ is a scalar in $\mathbb{R}$.
+- We represent the input data as a matrix $X$, where each row corresponds to a data point, and each column corresponds to a specific feature. The vector $y$ contains the corresponding output values.
 
 #### The Model:
 The general multiple linear regression model is represented as:
@@ -303,9 +305,9 @@ Y = X B
 ```
 
 Where:
-- $\(Y\)$ is the vector of outputs (size $\(n\)$ by 1),
-- $\(X\)$ is the design matrix (size $\(n\)$ by ($d+1$\)), including a column of ones to account for the intercept $\(\beta_0\)$ and $\(d\)$ columns for the features $\(x_1, x_2, \dots, x_d\)$,
-- $\(B\)$ is the vector of coefficients (size $\(d+1\)$ by 1), where each element corresponds to a specific parameter: $\(\beta_0, \beta_1, \dots, \beta_d\)$.
+- $Y$ is the vector of outputs (size $n$ by 1),
+- $X$ is the design matrix (size $n$ by ($d+1$), including a column of ones to account for the intercept $\beta_0$ and $d$ columns for the features $x_1, x_2, \dots, x_d$,
+- $B$ is the vector of coefficients (size $d+1$ by 1), where each element corresponds to a specific parameter: $\beta_0, \beta_1, \dots, \beta_d$.
 
 So, the matrix form of the equation is:
 
@@ -332,13 +334,13 @@ y_n
 ```
 
 Here:
-- $\(Y\)$ is a column vector containing the actual output values for all data points.
-- $\(X\)$ is the design matrix, where the first column is all 1's (for the intercept term \($\beta_0$\)), and the remaining columns are the feature values.
-- $\(B\)$ is the vector of coefficients (the parameters we want to estimate).
+- $Y$ is a column vector containing the actual output values for all data points.
+- $X$ is the design matrix, where the first column is all 1's (for the intercept term $\beta_0$), and the remaining columns are the feature values.
+- $B$ is the vector of coefficients (the parameters we want to estimate).
 
 ### Objective: Minimize the Cost Function
 
-The goal of linear regression is to find the values of $\(B\)$ (the coefficients) that minimize the difference between the predicted values $(\hat{y}_i\)$ and the actual values $\(y_i\)$ for all data points.
+The goal of linear regression is to find the values of $B$ (the coefficients) that minimize the difference between the predicted values $\hat{y}_i$ and the actual values $y_i$ for all data points.
 
 The cost function (also known as the **loss function**) used to measure the error is the **Mean Squared Error (MSE)**, given by:
 
@@ -350,7 +352,7 @@ Where:
 - $y_i$ is the actual value for the $i$-th data point,
 - $\hat{y}_i = X_i B$ is the predicted value for the $i$-th data point (using the current estimate of $B$).
 
-Since the model $\(Y = X B\)$ uses matrix notation, we can rewrite the cost function in matrix form as:
+Since the model $Y = X B$ uses matrix notation, we can rewrite the cost function in matrix form as:
 
 ```math
 J(B) = \frac{1}{2n} (Y - X B)^T (Y - X B)
@@ -360,7 +362,7 @@ This is the sum of squared residuals (the differences between the actual and pre
 
 ### Minimizing the Cost Function
 
-To minimize the cost function $\(J(B)\)$, we need to find the value of $\(B\)$ that minimizes this expression. This can be done by taking the **derivative** of $\(J(B)\)$ with respect to $\(B\)$ and setting it equal to zero (this is a standard method in optimization). The solution is:
+To minimize the cost function $J(B)$, we need to find the value of $B$ that minimizes this expression. This can be done by taking the **derivative** of $J(B)$ with respect to $B$ and setting it equal to zero (this is a standard method in optimization). The solution is:
 
 ```math
 B = (X^T X)^{-1} X^T Y
@@ -379,19 +381,19 @@ So, by multiplying $(X^T X)^{-1} X^T Y$, we get the vector $B$ that minimizes th
 In summary:
 1. **Model**: $Y = X B$, where $Y$ is the output, $X$ is the design matrix, and $B$ is the vector of coefficients.
 2. **Cost Function**: The objective is to minimize $J(B) = \frac{1}{2n} (Y - X B)^T (Y - X B)$, the Mean Squared Error between the actual and predicted values.
-3. **Solution**: The optimal coefficients $\(B\)$ are found using the formula $B = (X^T X)^{-1} X^T Y$.
+3. **Solution**: The optimal coefficients $B$ are found using the formula $B = (X^T X)^{-1} X^T Y$.
 
 This formula is the core of multiple linear regression, and it allows you to compute the coefficients that give the best fit to your data.
 
 ## Case 3:
 
-This case describes an extension of the previous **multiple linear regression** to a situation where you have **multiple outputs** (i.e., \($Y$ $\in$ $\mathbb{R}^{n \times 2}$\)) instead of just a single output. This type of model is also known as **multivariate linear regression**.
+This case describes an extension of the previous **multiple linear regression** to a situation where you have **multiple outputs** (i.e., \($Y$ $\in$ $\mathbb{R}^{n \times 2}$)) instead of just a single output. This type of model is also known as **multivariate linear regression**.
 
 ### Notation and Setup
 
 - You have $n$ data points, each with $d$ features.
-- Each data point has **2 output values** (so $Y$ is now a matrix of size \($n \times 2$\)).
-- Each output value corresponds to a vector in $\mathbb{R}^2$, so the target output for each data point is a pair of values $\(y_{i1}, y_{i2}\)$.
+- Each data point has **2 output values** (so $Y$ is now a matrix of size \($n \times 2$).
+- Each output value corresponds to a vector in $\mathbb{R}^2$, so the target output for each data point is a pair of values $(y_{i1}, y_{i2})$.
 
 ### Model Representation
 
@@ -402,8 +404,8 @@ Y = X B
 ```
 
 Where:
-- $Y$ is the matrix of outputs (size $n \times 2$\),
-- $X$ is the **design matrix** (size $n$ $\times$ ($d+1$)\), which includes a column of ones (for the intercept term \($\beta_0\$)) and $\(d\)$ columns for the input features \($x_1$, $x_2$, $\dots$, $x_d$\),
+- $Y$ is the matrix of outputs (size $n \times 2$),
+- $X$ is the **design matrix** (size $n$ $\times$ ($d+1$), which includes a column of ones (for the intercept term \($\beta_0\$)) and $\(d\)$ columns for the input features \($x_1$, $x_2$, $\dots$, $x_d$\),
 - $B$ is the coefficient matrix (size \($d+1$) $\times$ $2$\) where each column corresponds to the coefficients of one of the two output variables.
 
 The equation can be written as:
@@ -431,7 +433,7 @@ y_{n1} & y_{n2}
 ```
 
 Where:
-- Each $y_{i1}$ and $y_{i2}$ represent the two outputs for the $\(i\)$-th data point,
+- Each $y_{i1}$ and $y_{i2}$ represent the two outputs for the $i$-th data point,
 - The matrix $B$ contains the coefficients that will be estimated.
 
 ### Objective: Minimize the Cost Function
