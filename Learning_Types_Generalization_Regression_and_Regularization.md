@@ -288,8 +288,6 @@ Linear regression is a simple yet powerful method for predicting continuous valu
 
 ## Multiple Linear Regression (Higher-Dimensional Case)
  
-When $x_i$ $\in$ $\mathbb{R}^{d}$ and $Y_i$ $\in$ $\mathbb{R}$.
-
 This case is an extension of linear regression to handle multiple input features (i.e., $d > 1$), making it a **multiple linear regression** problem.
 
 ### Setup and Notation
@@ -491,3 +489,341 @@ To summarize:
 3. **Solution**: The optimal coefficients are computed using the formula $B = (X^T X)^{-1} X^T Y$.
 
 This approach allows you to estimate the coefficients for multiple output variables at once, and it works similarly to the single-output case, except that the coefficient matrix $B$ has multiple columns, one for each output variable.
+
+
+# Non-Linear Regression Using Linear Basis Function   
+
+Non-linear regression is a fundamental technique in data mining, used to model complex relationships between input and output variables. While linear regression assumes a direct linear relationship, non-linear regression expands this by transforming the input data using *basis functions*.  
+
+A **linear basis function model** transforms the input variable $x$ into a new representation using a set of basis functions $\phi_j(x)$. These functions help map non-linear relationships into a higher-dimensional space where linear regression can be effectively applied.
+
+---
+
+## **1. Basis Functions in Non-Linear Regression**
+Basis functions help transform data into a more suitable form for modeling complex patterns. Below are some commonly used basis functions:
+
+### **A. Polynomial Basis Functions**  
+These are simple power functions of $x$:  
+```math
+\phi_j (x) = x^j
+``` 
+For example, a polynomial of degree 2 (quadratic) would use basis functions:  
+- $\phi_0(x) = 1$  (bias term)
+- $\phi_1(x) = x$  (linear term)
+- $\phi_2(x) = x^2$  (quadratic term)  
+
+#### **Use in Data Mining:**
+- Good for capturing smooth curves in data.
+- Works well for problems where the trend follows a known polynomial pattern.
+- However, higher-degree polynomials can lead to overfitting.
+
+---
+
+### **B. Gaussian Basis Functions**  
+These are bell-shaped functions centered at $\mu_j$:  
+```math
+\phi_j (x) = \exp \left( -\frac{(x - \mu_j)^2}{2s^2} \right)
+``` 
+where:
+- $\mu_j$ is the center of the Gaussian,
+- $s$ is the standard deviation (spread).  
+
+#### **Use in Data Mining:**
+- Useful for capturing local variations in data.
+- Common in clustering algorithms and kernel-based regression models.
+- Suitable for datasets where data points are grouped into localized patterns.
+
+---
+
+### **C. Sigmoidal Basis Functions**  
+These use the sigmoid function:  
+```math
+\phi_j (x) = \sigma \left( \frac{x - \mu_j}{s} \right)
+``` 
+where:
+```math
+\sigma(a) = \frac{1}{1 + \exp(-a)}
+```
+This function smoothly transitions between 0 and 1.
+
+#### **Use in Data Mining:**
+- Common in neural networks (activation functions).
+- Helps model step-like changes in data.
+- Useful in classification tasks where a decision boundary needs to be learned.
+
+---
+
+## **2. How Linear Basis Function Models Work**
+A linear combination of basis functions is used to model a target variable $y$:  
+```math
+y(x) = w_0 + w_1 \phi_1(x) + w_2 \phi_2(x) + ... + w_n \phi_n(x)
+``` 
+where:
+- $w_j$ are the model parameters (weights),
+- $\phi_j(x)$ are the basis functions.
+
+This approach allows us to use linear regression techniques while capturing non-linear relationships.
+
+---
+
+## **3. Applications in Data Mining**
+- **Predictive Analytics**: Basis function models help in making accurate predictions by capturing non-linear dependencies.
+- **Pattern Recognition**: Gaussian basis functions are used in anomaly detection and clustering.
+- **Neural Networks**: Sigmoidal basis functions are the foundation of deep learning models.
+- **Financial Forecasting**: Polynomial basis functions help in modeling trends in stock prices.
+
+---
+
+## **Conclusion**
+Linear basis function models offer a powerful way to apply regression in data mining, making non-linear relationships easier to analyze. By choosing the right basis functions, data scientists can model complex data patterns effectively while maintaining interpretability.
+ 
+
+# **Regression with Basis Functions**
+
+The concept of **regression with basis functions** involves using mathematical transformations (basis functions) to enhance the predictive power of a regression model, especially when the relationship between inputs and outputs is complex or non-linear. 
+
+Let’s break down the components and the mathematical formulation step-by-step.
+
+---
+
+### **Basic Regression with Basis Functions**
+In simple linear regression, we try to predict the output $Y$ based on the input features $X$ using a linear relationship. For example, in simple linear regression:
+
+```math
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_d X_d
+``` 
+
+where $X_1$, $X_2$, $\dots$, $X_d$ are input features, and $\beta_0$, $\beta_1$, $\dots$, $\beta_d$ are the coefficients (weights) that we want to learn.
+
+**But what if the relationship is non-linear?**  
+We can apply **basis functions** (like squares, exponentials, or other functions) to transform the input features so that a linear relationship becomes applicable in a new feature space. This allows us to capture more complex patterns in the data.
+
+---
+
+### **Understanding the Notation**
+
+In the equation:
+
+```math
+Y = \Phi(X) B
+``` 
+
+- **$X$ $\in$ $\mathbb{R}^{n \times (d+1)}$**: This is the **input matrix**, where $n$ is the number of data points (samples), and $d$ is the number of features. The "+1" accounts for the bias term $\beta_0$.
+  
+- **$Y$ $\in$ $\mathbb{R}^{n \times 2}$**: This is the **output matrix**, where $n$ is the number of samples, and there are two output values for each sample (multi-output regression). It could be used to predict multiple outcomes at once, such as both height and weight based on the same input features.
+  
+- **$B$ $\in$ $\mathbb{R}^{(d+1) \times 2}$**: This is the matrix of **coefficients (weights)**, where each element corresponds to the weight for a particular feature after applying basis functions, and the "+1" again accounts for the intercept term.
+
+- **$\Phi(X)$**: This represents the **transformed feature matrix** where each feature in $X$ is transformed by the chosen basis functions (e.g., polynomials, exponentials, or other non-linear transformations).
+
+---
+
+### **Goal of the Regression:**
+
+The goal of this regression model is to find the best matrix **$B$** (which contains the coefficients $\beta_0$, $\beta_1$, $\dots$, $\beta_d$) that minimizes the error between the predicted and actual values of $Y$.
+
+The error is measured by the **Mean Squared Error (MSE)**:
+
+```math
+J(B) = \frac{1}{2n} \sum_{i=1}^{n} (Y_i - \Phi(X_i) B)^2
+``` 
+
+Where:
+- $Y_i$ is the actual output for the \(i\)-th sample,
+- $\Phi(X_i)$ $B$ is the predicted output for the \(i\)-th sample,
+- The error is squared to penalize larger errors more, and then averaged over all the samples.
+
+---
+
+### **Matrix Form of the Model**
+
+Now, let’s represent the model in matrix form to handle multiple inputs and outputs efficiently.
+
+#### Input Matrix: $\Phi(X)$
+
+The input matrix **$\Phi(X)$** contains the transformed features for all data points. Each row corresponds to one data point, and each column corresponds to a transformed version of the features.
+
+For example, if you have three data points and two features $X_1$ and $X_2$, the matrix looks like this:
+
+```math
+\Phi(X) =
+\begin{pmatrix}
+1 & \phi(x_{11}) & \phi(x_{12}) \\
+1 & \phi(x_{21}) & \phi(x_{22}) \\
+1 & \phi(x_{31}) & \phi(x_{32}) \\
+\end{pmatrix}
+``` 
+
+Where:
+- The first column of ones corresponds to the bias term ($\beta_0$).
+- The other columns represent the transformed features ($\phi(x)$), which could be squares, exponentials, etc.
+
+#### Output Matrix: $Y$
+
+The output matrix $Y$ contains the actual values we want to predict for each data point. For example, if we want to predict two values for each data point (like height and weight), the output matrix would look like:
+
+```math
+Y =
+\begin{pmatrix}
+y_{11} & y_{12} \\
+y_{21} & y_{22} \\
+y_{31} & y_{32} \\
+\end{pmatrix}
+``` 
+
+Where:
+- $y_{i1}$ and $y_{i2}$ represent the two output values for the \(i\)-th data point.
+
+#### Coefficients Matrix: $B$
+
+The coefficients matrix $B$ holds the weights that we are trying to learn. The matrix will look like this:
+
+```math
+B =
+\begin{pmatrix}
+\beta_0 & \beta_1 \\
+\beta_0 & \beta_2 \\
+\beta_1 & \beta_1 \\
+\end{pmatrix}
+``` 
+
+Where:
+- $\beta_0$ represents the intercept (bias term),
+- The other $\beta$ values correspond to the weights of the transformed features.
+
+---
+
+### **Estimation of $B$**
+
+To find the best values for the coefficients matrix $B$, we use the following formula:
+
+```math
+\hat{B} = (\Phi(X)^T \Phi(X))^{-1} \Phi(X)^T Y
+``` 
+
+Where:
+- $\Phi(X)^T$ is the **transpose** of the matrix $\Phi(X)$.
+- $(\Phi(X)^T \Phi(X))^{-1}$ is the **inverse** of the matrix $\Phi(X)^T$ $\Phi(X)$.
+- This formula allows us to solve for $B$ in a way that minimizes the **mean squared error**.
+
+---
+
+### **Summary**
+
+- **Basis functions** allow us to transform the input features into a higher-dimensional space, making it easier for the model to capture complex relationships.
+- The model seeks the **best coefficients (weights)** that minimize the difference between the predicted values and the actual values.
+- This is done by solving for **$B$** using matrix operations, specifically using the formula $\hat{B} = (\Phi(X)^T \Phi(X))^{-1} \Phi(X)^T Y$.
+
+By using basis functions, the regression model becomes more flexible and can handle more complex, non-linear relationships in the data.
+
+# **Probabilistic Linear Predictions:**
+
+In this section, we are diving into **probabilistic models** in the context of linear regression, specifically how we model the uncertainty of our predictions using **Gaussian distributions**.
+
+### **1. Gaussian Distribution (Univariate)**
+
+First, let’s define the **univariate Gaussian distribution**. It gives us the probability of observing a particular value \( x \) given the mean \( \mu \) and the variance \( \sigma^2 \):
+
+\[
+f(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right)
+\]
+
+- **\( \mu \)** is the mean (the center of the distribution).
+- **\( \sigma^2 \)** is the variance (a measure of spread).
+- The equation describes a bell curve, where the highest point is at \( \mu \), and the spread is controlled by \( \sigma^2 \).
+
+### **2. Multivariate Gaussian Distribution**
+
+Now, when we deal with **multivariate data**, where the input \( X \) is a vector in \( \mathbb{R}^d \) (meaning multiple features), we use the **multivariate Gaussian distribution**.
+
+The probability density function for a **multivariate Gaussian distribution** is given by:
+
+\[
+f(X; \mu, \Sigma) = \frac{1}{(2\pi)^{d/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (X - \mu)^T \Sigma^{-1} (X - \mu) \right)
+\]
+
+Where:
+
+- **\( X \)** is a vector of observations (a point in the \( d \)-dimensional space).
+- **\( \mu \)** is the mean vector of size \( d \times 1 \).
+- **\( \Sigma \)** is the covariance matrix (a \( d \times d \) matrix) that describes the correlation between the features.
+- **\( |\Sigma| \)** is the determinant of the covariance matrix.
+- **\( \Sigma^{-1} \)** is the inverse of the covariance matrix.
+
+The multivariate Gaussian distribution describes how likely the vector \( X \) is, given the mean vector \( \mu \) and the covariance matrix \( \Sigma \).
+
+### **3. Likelihood Estimation in Linear Regression**
+
+Now, let’s connect the probabilistic model to linear regression:
+
+In linear regression, we model the output \( y_i \) for each data point as a linear function of the input features \( X_i \), plus some noise (error):
+
+\[
+y_i = X_i B + \epsilon_i
+\]
+
+Where:
+
+- \( y_i \) is the observed output (target variable),
+- \( X_i \) is the input vector (features) for the \( i \)-th data point,
+- \( B \) is the vector of model parameters (coefficients),
+- \( \epsilon_i \) is the error term.
+
+We assume that the errors \( \epsilon_i \) are distributed as a **Gaussian distribution** with **mean 0** and **variance \( \sigma^2 \)**:
+
+\[
+\epsilon_i \sim \mathcal{N}(0, \sigma^2)
+\]
+
+Thus, the output \( y_i \) is also normally distributed with mean \( X_i B \) (the linear prediction) and variance \( \sigma^2 \):
+
+\[
+y_i \sim \mathcal{N}(X_i B, \sigma^2)
+\]
+
+This implies that the likelihood of observing \( y_i \) given \( X_i \) and the model parameters \( B \) is:
+
+\[
+P(y_i | X_i, B) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(y_i - X_i B)^2}{2\sigma^2} \right)
+\]
+
+### **4. Likelihood Function for the Entire Dataset**
+
+Given the assumption that each data point is independent, the likelihood function for the entire dataset of size \( n \) (with observations \( (X_1, y_1), (X_2, y_2), \dots, (X_n, y_n) \)) is the product of the individual likelihoods:
+
+\[
+P(Y | X, B, \sigma^2) = \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(y_i - X_i B)^2}{2\sigma^2} \right)
+\]
+
+Taking the natural logarithm of the likelihood function gives us the **log-likelihood**:
+
+\[
+\log P(Y | X, B, \sigma^2) = -\frac{n}{2} \log(2\pi \sigma^2) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (y_i - X_i B)^2
+\]
+
+This log-likelihood function is what we want to **maximize** in order to estimate the parameters \( B \) and \( \sigma^2 \).
+
+### **5. Maximum Likelihood Estimation**
+
+The maximum likelihood estimation (MLE) of the parameters \( B \) and \( \sigma^2 \) can be found by:
+
+- **Maximizing** the log-likelihood function with respect to \( B \), which will give us the best-fitting coefficients.
+- The term inside the summation \( (y_i - X_i B)^2 \) resembles the residual sum of squares (RSS) used in least squares regression.
+
+By differentiating the log-likelihood function with respect to \( B \) and setting it to zero, we get the same **normal equation** that we saw earlier for least squares:
+
+\[
+B = (X^T X)^{-1} X^T Y
+\]
+
+Thus, the probabilistic approach leads to the same solution as the least squares method.
+
+### **Summary:**
+
+- In **probabilistic linear regression**, we assume that the target variable \( y \) is normally distributed with mean \( X_i B \) and variance \( \sigma^2 \).
+- We model the likelihood of the observations and use **maximum likelihood estimation (MLE)** to find the best parameters \( B \) and \( \sigma^2 \).
+- The resulting coefficients \( B \) are the same as those found through the traditional least squares method.
+
+This approach provides a probabilistic interpretation of linear regression, helping to quantify the uncertainty around the predictions.
+ 
+ 
