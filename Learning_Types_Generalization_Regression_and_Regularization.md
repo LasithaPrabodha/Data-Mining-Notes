@@ -722,107 +722,107 @@ In this section, we are diving into **probabilistic models** in the context of l
 
 ### **1. Gaussian Distribution (Univariate)**
 
-First, let’s define the **univariate Gaussian distribution**. It gives us the probability of observing a particular value \( x \) given the mean \( \mu \) and the variance \( \sigma^2 \):
+First, let’s define the **univariate Gaussian distribution**. It gives us the probability of observing a particular value $x$ given the mean $\mu$ and the variance $\sigma^2$:
 
-\[
+```math
 f(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right)
-\]
+```
 
-- **\( \mu \)** is the mean (the center of the distribution).
-- **\( \sigma^2 \)** is the variance (a measure of spread).
-- The equation describes a bell curve, where the highest point is at \( \mu \), and the spread is controlled by \( \sigma^2 \).
+- **$\mu$** is the mean (the center of the distribution).
+- **$\sigma^2$** is the variance (a measure of spread).
+- The equation describes a bell curve, where the highest point is at $\mu$, and the spread is controlled by $\sigma^2$.
 
 ### **2. Multivariate Gaussian Distribution**
 
-Now, when we deal with **multivariate data**, where the input \( X \) is a vector in \( \mathbb{R}^d \) (meaning multiple features), we use the **multivariate Gaussian distribution**.
+Now, when we deal with **multivariate data**, where the input $X$ is a vector in $\mathbb{R}^d$ (meaning multiple features), we use the **multivariate Gaussian distribution**.
 
 The probability density function for a **multivariate Gaussian distribution** is given by:
 
-\[
+```math
 f(X; \mu, \Sigma) = \frac{1}{(2\pi)^{d/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (X - \mu)^T \Sigma^{-1} (X - \mu) \right)
-\]
+```
 
 Where:
 
-- **\( X \)** is a vector of observations (a point in the \( d \)-dimensional space).
-- **\( \mu \)** is the mean vector of size \( d \times 1 \).
-- **\( \Sigma \)** is the covariance matrix (a \( d \times d \) matrix) that describes the correlation between the features.
-- **\( |\Sigma| \)** is the determinant of the covariance matrix.
-- **\( \Sigma^{-1} \)** is the inverse of the covariance matrix.
+- **$X$** is a vector of observations (a point in the $d$-dimensional space).
+- **$\mu$** is the mean vector of size $d \times 1$.
+- **$\Sigma$** is the covariance matrix (a $d \times d$ matrix) that describes the correlation between the features.
+- **$|\Sigma|$** is the determinant of the covariance matrix.
+- **$\Sigma^{-1}$** is the inverse of the covariance matrix.
 
-The multivariate Gaussian distribution describes how likely the vector \( X \) is, given the mean vector \( \mu \) and the covariance matrix \( \Sigma \).
+The multivariate Gaussian distribution describes how likely the vector $X$ is, given the mean vector $\mu$ and the covariance matrix $\Sigma$.
 
 ### **3. Likelihood Estimation in Linear Regression**
 
 Now, let’s connect the probabilistic model to linear regression:
 
-In linear regression, we model the output \( y_i \) for each data point as a linear function of the input features \( X_i \), plus some noise (error):
+In linear regression, we model the output $y_i$ for each data point as a linear function of the input features $X_i$, plus some noise (error):
 
-\[
+```math
 y_i = X_i B + \epsilon_i
-\]
+```
 
 Where:
 
-- \( y_i \) is the observed output (target variable),
-- \( X_i \) is the input vector (features) for the \( i \)-th data point,
-- \( B \) is the vector of model parameters (coefficients),
-- \( \epsilon_i \) is the error term.
+- $y_i$ is the observed output (target variable),
+- $X_i$ is the input vector (features) for the $i$-th data point,
+- $B$ is the vector of model parameters (coefficients),
+- $\epsilon_i$ is the error term.
 
-We assume that the errors \( \epsilon_i \) are distributed as a **Gaussian distribution** with **mean 0** and **variance \( \sigma^2 \)**:
+We assume that the errors $\epsilon_i$ are distributed as a **Gaussian distribution** with **mean 0** and **variance $\sigma^2$**:
 
-\[
+```math
 \epsilon_i \sim \mathcal{N}(0, \sigma^2)
-\]
+```
 
-Thus, the output \( y_i \) is also normally distributed with mean \( X_i B \) (the linear prediction) and variance \( \sigma^2 \):
+Thus, the output $y_i$ is also normally distributed with mean $X_i B$ (the linear prediction) and variance $\sigma^2$:
 
-\[
+```math
 y_i \sim \mathcal{N}(X_i B, \sigma^2)
-\]
+```
 
-This implies that the likelihood of observing \( y_i \) given \( X_i \) and the model parameters \( B \) is:
+This implies that the likelihood of observing $y_i$ given $X_i$ and the model parameters $B$ is:
 
-\[
+```math
 P(y_i | X_i, B) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(y_i - X_i B)^2}{2\sigma^2} \right)
-\]
+```
 
 ### **4. Likelihood Function for the Entire Dataset**
 
-Given the assumption that each data point is independent, the likelihood function for the entire dataset of size \( n \) (with observations \( (X_1, y_1), (X_2, y_2), \dots, (X_n, y_n) \)) is the product of the individual likelihoods:
+Given the assumption that each data point is independent, the likelihood function for the entire dataset of size $n$ (with observations ($X_1$, $y_1$), ($X_2$, $y_2$), $\dots$, ($X_n$, $y_n$)) is the product of the individual likelihoods:
 
-\[
+```math
 P(Y | X, B, \sigma^2) = \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(y_i - X_i B)^2}{2\sigma^2} \right)
-\]
+```
 
 Taking the natural logarithm of the likelihood function gives us the **log-likelihood**:
 
-\[
+```math
 \log P(Y | X, B, \sigma^2) = -\frac{n}{2} \log(2\pi \sigma^2) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (y_i - X_i B)^2
-\]
+```
 
-This log-likelihood function is what we want to **maximize** in order to estimate the parameters \( B \) and \( \sigma^2 \).
+This log-likelihood function is what we want to **maximize** in order to estimate the parameters $B$ and $\sigma^2$.
 
 ### **5. Maximum Likelihood Estimation**
 
-The maximum likelihood estimation (MLE) of the parameters \( B \) and \( \sigma^2 \) can be found by:
+The maximum likelihood estimation (MLE) of the parameters $B$ and $\sigma^2$ can be found by:
 
-- **Maximizing** the log-likelihood function with respect to \( B \), which will give us the best-fitting coefficients.
-- The term inside the summation \( (y_i - X_i B)^2 \) resembles the residual sum of squares (RSS) used in least squares regression.
+- **Maximizing** the log-likelihood function with respect to $B$, which will give us the best-fitting coefficients.
+- The term inside the summation $(y_i - X_i B)^2$ resembles the residual sum of squares (RSS) used in least squares regression.
 
-By differentiating the log-likelihood function with respect to \( B \) and setting it to zero, we get the same **normal equation** that we saw earlier for least squares:
+By differentiating the log-likelihood function with respect to $B$ and setting it to zero, we get the same **normal equation** that we saw earlier for least squares:
 
-\[
+```math
 B = (X^T X)^{-1} X^T Y
-\]
+```
 
 Thus, the probabilistic approach leads to the same solution as the least squares method.
 
 ### **Summary:**
 
-- In **probabilistic linear regression**, we assume that the target variable \( y \) is normally distributed with mean \( X_i B \) and variance \( \sigma^2 \).
-- We model the likelihood of the observations and use **maximum likelihood estimation (MLE)** to find the best parameters \( B \) and \( \sigma^2 \).
-- The resulting coefficients \( B \) are the same as those found through the traditional least squares method.
+- In **probabilistic linear regression**, we assume that the target variable $y$ is normally distributed with mean $X_i B$ and variance $\sigma^2$.
+- We model the likelihood of the observations and use **maximum likelihood estimation (MLE)** to find the best parameters $B$ and $\sigma^2$.
+- The resulting coefficients $B$ are the same as those found through the traditional least squares method.
 
 This approach provides a probabilistic interpretation of linear regression, helping to quantify the uncertainty around the predictions.
  
