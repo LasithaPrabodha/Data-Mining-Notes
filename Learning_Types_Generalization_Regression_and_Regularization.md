@@ -82,6 +82,7 @@ One of the most common clustering algorithms is **k-means**. The idea is to part
 c_i = \arg \min_{j} \| x_i - \mu_j \|^2
 ``` 
 where $\mu_j$ is the centroid of cluster $j$, and $x_i$ is a data point.
+
 3. Recalculate the centroids by averaging the points in each cluster:
 ```math
 \mu_j = \frac{1}{|C_j|} \sum_{i \in C_j} x_i
