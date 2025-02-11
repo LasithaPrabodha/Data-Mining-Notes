@@ -42,9 +42,9 @@
 - **$\mathbf{I}_n$**: The identity matrix of size $n \times n$, which is a square matrix with ones on the diagonal and zeros elsewhere.  
   Example: $\mathbf{I}_2$ is a 2x2 matrix:
   
-  ```math
-  \mathbf{I}_2 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
-  ```
+```math
+\mathbf{I}_2 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+```
 
 - **$\mathbf{x}^{T}$**: The transpose of vector $\mathbf{x}$, which switches its rows and columns.  
   Example: If $\mathbf{x} = [x_1, x_2]^T$, then its transpose is $\mathbf{x}^{T} = [x_1, x_2]$.
@@ -95,9 +95,9 @@
   This is the predicted value of the target variable, where $\mathbf{w}^T \mathbf{x}$ is the weighted sum of the input features and $b$ is the bias term.
 
 - **Loss Function (Mean Squared Error)**:  
-  ```math
-  J(\mathbf{w}, b) = \frac{1}{m} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2
-  ```  
+```math
+J(\mathbf{w}, b) = \frac{1}{m} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2
+```  
   The MSE measures the average squared difference between the true labels and the predicted labels, and it's used to optimize the model parameters.
 
 #### **Logistic Regression**
@@ -106,9 +106,11 @@
   The sigmoid function squashes the output between 0 and 1, making it suitable for binary classification.
 
 - **Loss Function (Binary Cross-Entropy)**:  
-  ```math
-  J(\mathbf{w}, b) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]
-  ```  
+
+```math
+J(\mathbf{w}, b) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]
+```  
+
   This loss function is used to evaluate the performance of a binary classification model.
 
 ---
@@ -121,11 +123,121 @@
 - **$\theta = (\mathbf{w}, b)$**: Model parameters, including weights and biases, which are updated during the training process.
 
 - **Gradient Descent Update Rule**:  
-  ```math
-  \theta := \theta - \alpha \nabla J(\theta)
-  ```  
+```math
+\theta := \theta - \alpha \nabla J(\theta)
+```  
   This rule updates the model parameters by moving them in the opposite direction of the gradient of the cost function, scaled by the learning rate $\alpha$.
+
+Great! Let's continue with the rest of the notations:
 
 ---
 
-I'll continue with more explanations of other notations if you'd like! Let me know if you'd like further details on any particular concept.
+### **6. Regularization**
+Regularization techniques are used to prevent overfitting by penalizing large weights in the model. This helps improve the model's generalization to new, unseen data.
+
+- **$\lambda$**: The regularization parameter that controls the strength of regularization. A larger $\lambda$ applies more penalty, while a smaller $\lambda$ applies less penalty.
+
+#### **L1 Regularization (Lasso)**
+- **$L1$ Regularization**:  
+```math
+J(\mathbf{w}) = J_0(\mathbf{w}) + \lambda \sum_{j=1}^{n} |w_j|
+```  
+  The term $\lambda \sum_{j=1}^{n} |w_j|$ is the regularization term. This type of regularization encourages sparsity in the weight vector, meaning it tends to push some weights to exactly zero, leading to simpler models.
+
+#### **L2 Regularization (Ridge)**
+- **$L2$ Regularization**:  
+```math
+J(\mathbf{w}) = J_0(\mathbf{w}) + \lambda \sum_{j=1}^{n} w_j^2
+```  
+  The term $\lambda \sum_{j=1}^{n} w_j^2$ is the regularization term. This type of regularization penalizes large weights but typically does not force them to zero. It helps in reducing overfitting by shrinking the weights.
+
+---
+
+### **7. Evaluation Metrics**
+These are metrics used to evaluate the performance of machine learning models, particularly in classification and regression tasks.
+
+#### **Classification Metrics**
+- **Accuracy**:  
+```math
+\frac{\text{Correct Predictions}}{\text{Total Predictions}}
+```  
+  Accuracy is the proportion of correct predictions made by the model. It's simple and intuitive but can be misleading if the dataset is imbalanced (e.g., many more negative examples than positive ones).
+
+- **Precision**:  
+```math
+\frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}}
+```  
+  Precision measures the accuracy of the positive predictions made by the model. It answers the question: "Of all the instances that were predicted as positive, how many were actually positive?"
+
+- **Recall**:  
+```math
+\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}
+```  
+  Recall measures how well the model identifies all positive instances. It answers the question: "Of all the actual positives, how many did the model correctly identify?"
+
+- **F1 Score**:  
+```math
+2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+```  
+  The F1 score is the harmonic mean of precision and recall. It's particularly useful when you need to balance both precision and recall.
+
+#### **Regression Metrics**
+- **Mean Absolute Error (MAE)**:  
+```math
+\frac{1}{m} \sum_{i=1}^{m} |y_i - \hat{y}_i|
+```  
+  MAE measures the average magnitude of the errors between predicted and true values, without considering their direction (no positive or negative sign).
+
+- **Mean Squared Error (MSE)**:  
+```math
+\frac{1}{m} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2
+```  
+  MSE measures the average of the squared differences between the predicted and true values. It's more sensitive to outliers due to squaring the error.
+
+- **Root Mean Squared Error (RMSE)**:  
+```math
+\sqrt{\text{MSE}}
+```  
+  RMSE gives the standard deviation of the prediction errors, making it easier to interpret in the same units as the original data.
+
+---
+
+### **8. Additional Concepts**
+These are concepts that may appear across various machine learning tasks:
+
+- **Overfitting**: This occurs when a model learns the noise in the training data instead of the underlying data distribution. Regularization, early stopping, and cross-validation can help prevent overfitting.
+
+- **Underfitting**: This happens when a model is too simple to capture the underlying patterns in the data. Increasing model complexity or training for longer periods can address underfitting.
+
+- **Cross-Validation**: A technique used to assess how a model generalizes to unseen data. It involves splitting the dataset into multiple subsets, training the model on some of them, and testing it on others. One common approach is K-fold cross-validation.
+
+- **Bias-Variance Tradeoff**: This is the tradeoff between a model's bias (error due to overly simplistic assumptions) and variance (error due to complexity and sensitivity to small fluctuations in the training set). Balancing this tradeoff is key to achieving good model performance.
+
+---
+
+### **9. Common Optimization Algorithms**
+Here are some optimization algorithms often used in machine learning:
+
+- **Gradient Descent**: An iterative optimization algorithm used to minimize the loss function by updating parameters in the direction of the negative gradient of the cost function.
+```math
+\theta := \theta - \alpha \nabla J(\theta)
+```
+  where $\alpha$ is the learning rate and $\nabla J(\theta)$ is the gradient of the cost function.
+
+- **Stochastic Gradient Descent (SGD)**: A variant of gradient descent where the parameters are updated after processing each individual data point (instead of using the entire dataset), which makes the algorithm faster but noisier.
+
+- **Mini-Batch Gradient Descent**: A compromise between batch and stochastic gradient descent. It updates the parameters after processing a small subset (mini-batch) of data points.
+
+---
+
+### **10. Neural Networks and Deep Learning**
+Neural networks have additional specific notations related to layers, activations, and optimization:
+
+- **$L$**: The number of layers in a neural network. A deep neural network typically has many layers (hence the term "deep learning").
+
+- **$a^{[l]}$**: The activation at layer $l$, which is the output after applying an activation function to the weighted sum of inputs.
+
+- **$W^{[l]}$**: The weight matrix at layer $l$, which represents the parameters that connect the neurons in layer $l-1$ to layer $l$.
+
+- **$b^{[l]}$**: The bias vector at layer $l$, which is added to the weighted sum of inputs before applying the activation function.
+
