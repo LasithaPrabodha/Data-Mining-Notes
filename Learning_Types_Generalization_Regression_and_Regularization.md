@@ -828,3 +828,673 @@ Thus, the probabilistic approach leads to the same solution as the least squares
 This approach provides a probabilistic interpretation of linear regression, helping to quantify the uncertainty around the predictions.
  
  
+# Training vs. Testing
+
+### **Definitions**  
+1. **Dataset (D):** The complete collection of data. It consists of both training and testing data.
+2. **Training Data (DTr):** A subset of the dataset used to train the model. It consists of pairs of input features (**Xi**) and corresponding known outputs (**Yi**).  
+   - The model learns patterns and relationships from this data.
+   - The goal is to estimate the model parameters (θ) that best represent these relationships.
+3. **Trained Model:** After learning from the training data, the model becomes the **trained model**—ready to make predictions.
+
+4. **Testing Data (DTst):** A separate subset of the dataset that contains new, unseen data points (**Xj**) along with their actual expected outputs (**Yj**).
+   - This data is **never** used during training.
+   - It is used to evaluate how well the trained model performs on unseen data.
+
+### **Generalization & Generalization Error**  
+- **Generalization:** The ability of a trained model to perform well on new, unseen data.
+- **Generalization Error (Testing Error):** The difference between the model’s predictions on the test data and the actual expected outputs.
+  - **Lower Generalization Error** → Better model generalization → Model performs well on real-world unseen data.
+  - **Higher Generalization Error** → Poor generalization → Model overfits (memorizes training data but fails on new data).
+
+### **Goal of Training & Testing**
+We want the trained model to predict values for **Xj** (from DTst) as close as possible to the actual **Yj** values. If the predictions are close, the model has good generalization.
+ 
+ Here’s a simple example to illustrate **Training vs. Testing**:
+
+### **Problem: Predicting House Prices**  
+Suppose we want to build a model that predicts house prices based on features like square footage, number of bedrooms, and location.
+
+#### 1. **Dataset (D)**  
+We have 10 houses in our dataset. Each house has the following features: square footage (**Xi**), number of bedrooms (**Xi**), and location (**Xi**). Additionally, we know the actual price (**Yi**) for each house.
+
+| House | Square Footage | Bedrooms | Location | Actual Price (Yi) |
+|-------|----------------|----------|----------|------------------|
+| 1     | 1,000          | 2        | Suburban | $200,000         |
+| 2     | 1,500          | 3        | Urban    | $300,000         |
+| 3     | 2,000          | 3        | Suburban | $350,000         |
+| 4     | 1,800          | 4        | Urban    | $400,000         |
+| 5     | 1,200          | 2        | Suburban | $220,000         |
+| 6     | 2,500          | 4        | Suburban | $500,000         |
+| 7     | 2,800          | 4        | Urban    | $550,000         |
+| 8     | 1,400          | 3        | Suburban | $270,000         |
+| 9     | 3,000          | 5        | Urban    | $600,000         |
+| 10    | 1,600          | 3        | Suburban | $320,000         |
+
+#### 2. **Training Data (DTr)**  
+We split our dataset into **training data** (DTr), where we use 7 houses to train the model. For these houses, we know both the features (square footage, number of bedrooms, location) and the actual price. The model will use this data to learn the relationship between the features and the price.
+
+| House | Square Footage | Bedrooms | Location | Actual Price (Yi) |
+|-------|----------------|----------|----------|------------------|
+| 1     | 1,000          | 2        | Suburban | $200,000         |
+| 2     | 1,500          | 3        | Urban    | $300,000         |
+| 3     | 2,000          | 3        | Suburban | $350,000         |
+| 4     | 1,800          | 4        | Urban    | $400,000         |
+| 5     | 1,200          | 2        | Suburban | $220,000         |
+| 6     | 2,500          | 4        | Suburban | $500,000         |
+| 8     | 1,400          | 3        | Suburban | $270,000         |
+
+#### 3. **Trained Model**  
+The model uses the training data to learn the relationship between the features and prices. After training, it knows how to estimate the price based on input features.
+
+#### 4. **Testing Data (DTst)**  
+Now, we use **testing data** (DTst), which contains 3 houses that were not part of the training data. We want to see how well the trained model can predict the prices for these houses.
+
+| House | Square Footage | Bedrooms | Location | Actual Price (Yi) |
+|-------|----------------|----------|----------|------------------|
+| 7     | 2,800          | 4        | Urban    | $550,000         |
+| 9     | 3,000          | 5        | Urban    | $600,000         |
+| 10    | 1,600          | 3        | Suburban | $320,000         |
+
+#### 5. **Predictions on Testing Data**  
+The trained model makes predictions for the test data:
+
+| House | Predicted Price (Yj) | Actual Price (Yi) | Difference (Error) |
+|-------|----------------------|------------------|--------------------|
+| 7     | $540,000             | $550,000         | $10,000            |
+| 9     | $590,000             | $600,000         | $10,000            |
+| 10    | $315,000             | $320,000         | $5,000             |
+
+#### 6. **Generalization Error (Testing Error)**  
+- The model's predictions are close to the actual prices, with errors of $10,000 or less.
+- The **generalization error** (or **testing error**) is the average of the prediction errors on the test data:
+
+```math
+  \text{Generalization Error} = \frac{10,000 + 10,000 + 5,000}{3} = 8,333 \text{ (average error)}
+```
+
+If the model's errors were much larger, we could say it has **poor generalization** (it might have overfitted to the training data).
+
+#### 7. **Better Generalization**  
+If the model had a smaller error on the test data (e.g., errors under $5,000), we could say the model has **better generalization**.
+
+This example shows how training data is used to **train** the model, and testing data is used to evaluate how well the model **generalizes** to new, unseen data.
+ 
+
+# Overfitting and Underfitting  
+
+Both overfitting and underfitting describe how well a model can capture the underlying patterns in data, but in different ways.
+
+---
+
+### **Overfitting**
+
+**Overfitting** happens when a model is **too complex** and fits the **noise** or random fluctuations in the training data rather than the actual underlying patterns. It becomes highly tailored to the training data, but as a result, it performs poorly on new, unseen data (testing data).
+
+**Why it Happens:**
+- A model can overfit if it has too many parameters, too high complexity, or if it is trained for too many iterations, causing it to memorize the training data instead of learning generalizable patterns.
+
+**Key Indicators of Overfitting:**
+- **ETr(F)** (Training Error) is very low: The model fits the training data very well.
+- **ETst(F)** (Testing Error) is much higher than the training error: The model doesn't perform well on unseen data because it learned noise instead of useful patterns.
+
+**Example:**  
+Suppose we have a polynomial regression model. If we use a high-degree polynomial, the model might pass through every data point perfectly, resulting in a low training error. However, when we test the model on new data, it may perform poorly, showing that the model has overfitted the training data.
+
+- **Overfitting Scenario:**
+    - **Training Error (ETr)**: Low
+    - **Testing Error (ETst)**: High
+
+---
+
+### **Underfitting**
+
+**Underfitting** occurs when a model is **too simplistic** and fails to capture the main patterns or relationships in the data. It doesn’t have enough complexity to model the underlying trends properly.
+
+**Why it Happens:**
+- Underfitting can occur if the model is too simple (e.g., using a linear model for data that has non-linear patterns), or if the model is trained with too few features or insufficient iterations.
+
+**Key Indicators of Underfitting:**
+- **ETr(F)** (Training Error) is high: The model does not fit the training data well.
+- **ETst(F)** (Testing Error) is also high, but not as high as the training error: The model doesn’t generalize well to unseen data because it couldn’t learn the important patterns in the training data.
+
+**Example:**  
+Consider trying to fit a linear model to a dataset with a non-linear relationship. The linear model might not be able to capture the curve of the data, leading to high error both on the training set and on the test set.
+
+- **Underfitting Scenario:**
+    - **Training Error (ETr)**: High
+    - **Testing Error (ETst)**: High, but slightly lower than the training error
+
+---
+
+### **How Overfitting and Underfitting Relate to Each Other**
+
+**Overfitting:**  
+- We can find another model (**F'**) that has a **higher training error** but performs better on the **testing error**.
+- The model is too complex, and its performance on new data is worse because it learned the noise from the training set.
+
+**Underfitting:**  
+- We can find another model (**F'**) that has **lower training error** and also performs **better on testing error**.
+- The model is too simplistic and cannot capture the complexity of the data.
+
+---
+
+### **Visual Representation:**
+
+- **Overfitting:** Imagine a curve that passes through each training point but zigzags all over, trying to fit every small fluctuation in the data.
+- **Underfitting:** Imagine a straight line that doesn't even come close to capturing the general trend of the data, missing key patterns.
+
+---
+
+### **Summary:**
+- **Overfitting** = Complex model, performs well on training data but poorly on test data.
+- **Underfitting** = Too simple model, performs poorly on both training and test data.
+
+![alt text](images/overfitting-underfitting.png)
+
+The goal is to find a balance where the model **fits the training data well** and **generalizes well** to unseen data (testing data). This is achieved by using **model selection techniques** like cross-validation and regularization to avoid both overfitting and underfitting.
+
+# Bias-Variance Tradeoff 
+
+In supervised learning, understanding **Bias**, **Variance**, and their tradeoff is crucial to building models that generalize well to new, unseen data. Here's a detailed breakdown:
+
+---
+
+### **Definitions:**
+- **Y (Predictor Variable)**: The output or target value we want to predict.
+- **X (Covariates)**: The input features used to predict **Y**.
+- **f(X)**: The true underlying function that generates the data.
+- **ϵ**: The random noise, assumed to follow a normal distribution with mean 0 and variance **σ²** (irreducible error).
+
+The true relationship between **Y** and **X** is:
+```math
+Y = f(X) + ϵ
+``` 
+Where **f(X)** is the underlying function and **ϵ** is the error term.
+
+A **predictor model** tries to approximate **f(X)** using **f̂(X)**. The goal is to make **f̂(X)** as close as possible to **f(X)**.
+
+---
+
+### **Error Breakdown (Err):**
+The prediction error of our model is given by:
+```math
+\text{Err}(y, \hat{y}) = E[y - f(\hat{X})]
+``` 
+This error can be broken down into three components:
+
+```math
+\text{Err}(y, \hat{y}) = (E[f(\hat{X})] - y)^2 + E[(f(\hat{X}) - E[f(\hat{X})])^2] + \sigma^2
+``` 
+
+1. **Bias²**: The square of the difference between the **expected model prediction** and the true value.
+2. **Variance**: The variability of the model’s predictions for different training sets.
+3. **Irreducible Error (σ²)**: The noise or random error inherent in the data, which cannot be reduced no matter what model we use.
+
+Thus, the total prediction error is:
+```math
+\text{Err}(X) = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}
+``` 
+
+---
+
+### **Bias, Variance, and Their Effects**
+
+#### **1. Bias**
+- **Bias** refers to the **error introduced by approximating the true function** (**f(X)**) with a simpler model (**f̂(X)**).
+- **High Bias**: If the model is too simple (e.g., linear regression for a non-linear problem), it will make large errors even on the training data, leading to **high training error** and **high test error**. This is often called **underfitting**.
+    - **Example**: Using a straight line to model a curved relationship.
+    - **Effect**: The model **oversimplifies** the data and doesn't capture important patterns.
+
+#### **2. Variance**
+- **Variance** measures how much the model’s predictions fluctuate when trained on different subsets of the data. High variance indicates that the model is too sensitive to the specifics of the training set and might **overfit** the data.
+- **High Variance**: If the model is too complex (e.g., a deep neural network or high-degree polynomial), it may fit the training data extremely well but fail to generalize to new data, leading to **low training error** but **high test error**.
+    - **Example**: Using a high-degree polynomial to fit noisy data.
+    - **Effect**: The model **overfits** the training data and doesn't generalize well.
+
+
+![alt text](images/bias-variance.png)
+
+---
+
+### **The Bias-Variance Tradeoff**
+
+- **High Bias** leads to **underfitting** (simplistic models that don’t capture the underlying patterns).
+- **High Variance** leads to **overfitting** (complex models that fit the training data too well but fail to generalize).
+
+The **tradeoff** is finding the **optimal model complexity**:
+- **Too Simple Model (High Bias)**: High training error, high test error, **underfitting**.
+- **Too Complex Model (High Variance)**: Low training error, high test error, **overfitting**.
+- **Balanced Model**: Moderate training error and test error, **good generalization**.
+
+---
+
+### **Visualizing the Tradeoff:**
+
+![alt text](images/bias-variance-tradeoff.png)
+
+- The **x-axis** represents **model complexity** (from simple to complex).
+- The **y-axis** represents **error** (from low to high).
+
+At the **far left** (simple models):
+- **Bias** is high (because the model is too simple to capture the true pattern).
+- **Variance** is low (since the model is consistent).
+- The total error is dominated by **bias** (underfitting).
+
+At the **far right** (complex models):
+- **Bias** is low (because the model can fit the data closely).
+- **Variance** is high (because the model fluctuates based on training data).
+- The total error is dominated by **variance** (overfitting).
+
+At some **middle point**, the model has a balance between bias and variance, leading to the lowest **total error** and **best generalization**.
+
+---
+
+### **Practical Steps to Control Bias and Variance:**
+1. **To reduce bias (underfitting):**
+   - Use more complex models (e.g., non-linear models).
+   - Add more features.
+   - Increase the number of iterations/epochs for training.
+
+2. **To reduce variance (overfitting):**
+   - Use regularization (L1, L2) to penalize complexity.
+   - Use more training data to average out noisy fluctuations.
+   - Use techniques like **cross-validation** to better estimate model performance on unseen data.
+
+---
+
+### **Summary:**
+- **Bias**: Error due to overly simplistic models.
+- **Variance**: Error due to overly complex models.
+- The **bias-variance tradeoff** is about finding a balance between the two, so the model generalizes well without underfitting or overfitting.
+
+
+# Flexible vs. Inflexible Predictors
+
+Different machine learning models have **different levels of flexibility**, and the choice of flexibility depends on **task complexity** and the **available data**. 
+
+---
+
+### **1. What is Model Flexibility?**
+Model flexibility refers to a model's ability to fit different types of data:
+- **Flexible Models**: Can learn complex patterns but may overfit.
+- **Inflexible Models**: Simpler and more rigid, reducing overfitting but may underfit.
+
+Each dataset requires a different level of **flexibility** to balance **bias and variance**.
+
+---
+
+### **2. Controlling Flexibility: "The Knob"**
+We can **adjust flexibility** in many models using specific **"knobs"** (hyperparameters):
+
+| Model | Flexibility Knob |
+|--------|-------------------|
+| **Regression** | Basis Function & Order of Polynomial |
+| **Naïve Bayes** | Number of Attributes |
+| **Decision Trees** | Depth of Tree & Pruning Confidence |
+| **k-Nearest Neighbors (kNN)** | Number of Neighbors (k) |
+| **Support Vector Machines (SVM)** | Kernel Type & Cost Parameter |
+
+By adjusting these **knobs**, we can **tune** the model’s complexity to minimize **generalization error**.
+
+---
+
+### **3. Examples of Flexibility Control**
+#### **Regression (Polynomial Regression)**
+- **Low Flexibility (Linear Model)**: Fits simple relationships but underfits complex data.
+- **High Flexibility (High-degree Polynomial)**: Captures every small detail but may overfit.
+
+#### **Decision Trees**
+- **Shallow Tree (Inflexible)**: Generalizes well but might miss patterns.
+- **Deep Tree (Flexible)**: Captures all patterns but may overfit.
+
+#### **k-Nearest Neighbors (kNN)**
+- **Low k (Flexible Model, e.g., k=1)**: Very sensitive to noise (overfitting).
+- **High k (Inflexible Model, e.g., k=50)**: More stable but might smooth out important patterns (underfitting).
+
+---
+
+### **4. How to Choose the Right Flexibility?**
+1. **Start with a simpler (inflexible) model** and gradually increase flexibility.
+2. **Use validation sets** to measure performance.
+3. **Apply regularization** (e.g., Lasso/Ridge regression) to prevent overfitting in flexible models.
+4. **Use cross-validation** to find the optimal balance.
+
+---
+
+### **5. Goal: Minimize Generalization Error**
+- If a model is **too rigid**, it underfits and has **high bias**.
+- If a model is **too flexible**, it overfits and has **high variance**.
+- Adjust the **flexibility knob** to achieve **good generalization**.
+ 
+
+
+# Training, Validation, and Testing Sets  
+
+In machine learning, we divide the dataset into three parts: **Training, Validation, and Testing**. Each serves a distinct purpose to ensure the model generalizes well to unseen data.
+
+---
+
+### **1. Training Set**
+- **Purpose**: Used to train the model by estimating parameters.
+- **Process**:
+  - The model learns patterns from this dataset.
+  - Training error (**ETr**) is calculated to measure how well the model fits the training data.
+- **Risk**: If a model is evaluated only on training data, it may **overfit**, meaning it memorizes patterns rather than learning generalizable trends.
+
+---
+
+### **2. Validation Set**
+- **Purpose**: Used to tune **hyperparameters** and evaluate different model configurations.
+- **Process**:
+  - The model is tested on the validation set to calculate **validation error** (**EVal**).
+  - Hyperparameters (like polynomial order, number of layers in a neural network, or learning rate) are adjusted iteratively to improve performance.
+  - This iterative process is called **hyperparameter tuning**.
+- **Risk**: If we tweak the model too much based on the validation set, we might indirectly overfit to it.
+
+---
+
+### **3. Testing Set**
+- **Purpose**: Used for the **final evaluation** of the model after training and validation.
+- **Process**:
+  - The model is applied to unseen data to measure **generalization error** (**ETst**).
+  - No further tuning is allowed at this stage.
+- **Risk**: If the model was indirectly fine-tuned to the validation set, the test error might be higher than expected.
+
+---
+
+### **Workflow Summary**
+1. **Train** the model on the **Training Set** → Compute **Training Error**.
+2. **Validate** model performance on the **Validation Set** → Tune hyperparameters to minimize **Validation Error**.
+3. **Test** the final model on the **Testing Set** → Compute **Testing Error** to evaluate real-world performance.
+
+---
+
+### **Example: Training a Neural Network**
+1. **Training Set**: The model learns weights from a dataset of 10,000 images.
+2. **Validation Set**: We test the model on a separate 2,000 images and adjust parameters like learning rate and number of layers.
+3. **Testing Set**: The final trained model is evaluated on another 2,000 completely unseen images.
+
+---
+
+### **Key Takeaways**
+- **Training Set**: Helps the model learn.
+- **Validation Set**: Helps in tuning hyperparameters.
+- **Testing Set**: Measures real-world performance.
+ 
+ Here's a Python example demonstrating the use of **training, validation, and testing sets** using **Scikit-learn** with a simple **logistic regression** model. We'll use the **Iris dataset** for classification.
+
+---
+
+### **Steps in the Code:**
+1. **Load Dataset**: Import the Iris dataset.
+2. **Split Data**:
+   - 60% for **Training**.
+   - 20% for **Validation** (for hyperparameter tuning).
+   - 20% for **Testing** (final evaluation).
+3. **Train the Model**: Use the training set.
+4. **Validate the Model**: Tune hyperparameters (e.g., `C` in logistic regression).
+5. **Test the Model**: Evaluate final performance.
+
+---
+
+### **Code Implementation**
+```python
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# 1. Load the dataset
+iris = load_iris()
+X = iris.data  # Features
+y = iris.target  # Target labels
+
+# 2. Split into Training (60%), Validation (20%), Testing (20%)
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.4, random_state=42)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+
+# 3. Standardize Data (Important for models like Logistic Regression)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_val = scaler.transform(X_val)
+X_test = scaler.transform(X_test)
+
+# 4. Hyperparameter Tuning (Finding best C for Logistic Regression)
+best_acc = 0
+best_C = None
+for C in [0.01, 0.1, 1, 10]:  # Trying different values of C
+    model = LogisticRegression(C=C, random_state=42, max_iter=200)
+    model.fit(X_train, y_train)
+    val_acc = accuracy_score(y_val, model.predict(X_val))
+    
+    if val_acc > best_acc:  # Keep track of best model
+        best_acc = val_acc
+        best_C = C
+
+# 5. Train Final Model with Best Hyperparameter
+final_model = LogisticRegression(C=best_C, random_state=42, max_iter=200)
+final_model.fit(X_train, y_train)
+
+# 6. Evaluate on Test Set
+y_pred = final_model.predict(X_test)
+test_acc = accuracy_score(y_test, y_pred)
+
+# Output results
+print(f"Best Hyperparameter (C): {best_C}")
+print(f"Validation Accuracy: {best_acc:.2f}")
+print(f"Test Accuracy: {test_acc:.2f}")
+```
+
+---
+
+### **Explanation:**
+1. **Splitting Data**:
+   - 60% for **Training** (`X_train`, `y_train`).
+   - 20% for **Validation** (`X_val`, `y_val`) to tune hyperparameter **C**.
+   - 20% for **Testing** (`X_test`, `y_test`) for final model evaluation.
+
+2. **Scaling the Data**:
+   - Standardization (`StandardScaler`) ensures better model performance.
+
+3. **Hyperparameter Tuning**:
+   - We try different values of **C** (`0.01, 0.1, 1, 10`) and pick the one with the **highest validation accuracy**.
+
+4. **Final Model Training & Testing**:
+   - We train using the best **C** found in validation.
+   - Evaluate performance using the **Test Set**.
+
+---
+
+### **Expected Output (Example)**
+```
+Best Hyperparameter (C): 1
+Validation Accuracy: 0.97
+Test Accuracy: 0.95
+```
+(*Actual results may vary slightly due to randomness.*)
+ 
+# Cross-Validation  
+Cross-validation is a **resampling technique** used to evaluate machine learning models on limited data by splitting the dataset multiple times.
+
+---
+
+### **Why Cross-Validation?**
+When splitting data into **Training** and **Testing**, there is a **trade-off**:
+- **More Training Data** → Better learning but less generalization testing.
+- **More Testing Data** → Better generalization testing but less learning.
+
+To **solve this conflict**, we use **Cross-Validation (CV)** to estimate **generalization error** **without wasting data**.
+
+---
+
+### **1. How Cross-Validation Works**
+- Instead of a **fixed split**, the dataset is divided into **K equal parts (folds)**.
+- The model is trained **K times**, each time using **(K-1) folds for training** and **1 fold for testing**.
+- The **final result** is the **average performance** across all folds.
+
+---
+
+### **2. K-Fold Cross-Validation (Most Common)**
+#### **Example: 5-Fold Cross-Validation**
+1. Split data into **5 equal parts**.
+2. Train on **4 parts**, Test on **1 part**.
+3. Repeat this **5 times**, each time using a different part for testing.
+4. The final result is the **average performance over 5 tests**.
+
+**More commonly, we use 10-Fold Cross-Validation** (higher accuracy, but more computation).
+
+---
+
+### **3. Python Code Example (5-Fold Cross-Validation)**
+Using **Scikit-learn**, let's apply **5-fold cross-validation** on the **Iris dataset** using **Logistic Regression**.
+
+```python
+from sklearn.datasets import load_iris
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+# Load dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Initialize model
+model = LogisticRegression(max_iter=200)
+
+# Apply 5-Fold Cross-Validation
+scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+
+# Print results
+print(f"Cross-validation scores: {scores}")
+print(f"Mean Accuracy: {scores.mean():.2f}")
+```
+
+---
+
+### **4. Understanding the Output**
+Example Output:
+```
+Cross-validation scores: [0.97 0.95 0.98 0.96 0.94]
+Mean Accuracy: 0.96
+```
+- The model was trained **5 times**, each time on **4/5 of the data** and tested on **1/5**.
+- The final accuracy is the **average** of these 5 runs.
+
+---
+
+### **5. Types of Cross-Validation**
+| Method | Description |
+|--------|------------|
+| **K-Fold Cross-Validation** | Splits data into **K** folds, trains on **K-1**, tests on 1. |
+| **Stratified K-Fold** | Ensures each fold has the **same class distribution**. Useful for **imbalanced datasets**. |
+| **Leave-One-Out (LOO) CV** | Each sample is tested **individually**. Computationally expensive. |
+| **Repeated K-Fold** | Runs K-Fold multiple times to reduce variance in results. |
+
+---
+
+### **6. When to Use Cross-Validation?**
+- **Small datasets** (Prevents data wastage).  
+- **Model selection & hyperparameter tuning**.  
+- **Avoid overfitting & measure real performance**.  
+ 
+
+ ### **Weight Regularization in Machine Learning**  
+Weight regularization is used to **prevent overfitting** by adding a penalty to the model’s complexity. The goal is to control how large the coefficients (**β values**) of a model can get.
+
+---
+
+### **1. Why Regularization?**  
+In some cases, the matrix **(XᵀX)⁻¹** may not exist or be unstable (especially when **X is sparse or highly correlated**). To solve this, we add a small **regularization term (δ²I)** to stabilize the inversion.
+
+This results in the modified coefficient estimation:  
+```math
+\hat{B} = (X^TX + \delta^2 I_d)^{-1} X^T Y
+``` 
+
+This changes the **cost function** (J(β)) to include a **regularization penalty**:
+
+```math
+J(\beta) = \frac{1}{2N} \sum_{i=1}^{N} (Y - X\beta)^2 + \delta^2 \sum_{j=0}^{d+1} |\beta_j|^q
+```
+
+where:  
+- $q = 2$ → **Ridge Regression**  
+- $q = 1$ → **Lasso Regression**
+
+---
+
+### **2. Ridge vs. Lasso Regression**  
+| Regularization | Effect on Coefficients (β) | Impact on Features |
+|--------------|--------------------------|----------------------|
+| **Ridge Regression (L2 norm, q=2)** | Penalizes large β values but does not set them to zero | Keeps all features but reduces their impact |
+| **Lasso Regression (L1 norm, q=1)** | Shrinks smaller β values to exactly **zero** | Removes irrelevant features, leading to **feature selection** |
+
+---
+
+### **3. Python Example: Ridge & Lasso Regression**  
+We’ll use **Scikit-learn** to apply **Ridge** and **Lasso** regression on a sample dataset.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import Ridge, Lasso
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_regression
+
+# Generate synthetic regression data
+X, y = make_regression(n_samples=100, n_features=5, noise=10, random_state=42)
+
+# Split into training & test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Ridge Regression (L2 Regularization)
+ridge = Ridge(alpha=1.0)  # alpha = δ^2 (Regularization strength)
+ridge.fit(X_train, y_train)
+ridge_preds = ridge.predict(X_test)
+
+# Lasso Regression (L1 Regularization)
+lasso = Lasso(alpha=0.1)  # alpha = δ^2 (Regularization strength)
+lasso.fit(X_train, y_train)
+lasso_preds = lasso.predict(X_test)
+
+# Print Coefficients
+print("Ridge Coefficients:", ridge.coef_)
+print("Lasso Coefficients:", lasso.coef_)
+
+# Plot coefficient shrinkage
+plt.figure(figsize=(10, 5))
+plt.bar(range(len(ridge.coef_)), ridge.coef_, label="Ridge")
+plt.bar(range(len(lasso.coef_)), lasso.coef_, label="Lasso", alpha=0.7)
+plt.xlabel("Feature Index")
+plt.ylabel("Coefficient Value")
+plt.title("Feature Coefficients in Ridge vs. Lasso Regression")
+plt.legend()
+plt.show()
+```
+
+---
+
+### **4. Understanding the Output**
+1. **Ridge Regression (L2)**
+   - Shrinks β values but **doesn’t set any to zero**.
+   - Keeps all features, just reduces their impact.
+
+2. **Lasso Regression (L1)**
+   - Shrinks smaller β values **to exactly zero**.
+   - Performs **feature selection** by eliminating irrelevant features.
+
+3. **Visualization**
+   - The bar chart compares Ridge & Lasso coefficients.
+   - Ridge keeps all features, while Lasso removes some.
+
+---
+
+### **5. When to Use Ridge vs. Lasso?**
+| Scenario | Use **Ridge** | Use **Lasso** |
+|----------|--------------|--------------|
+| Many correlated features | ✅ | ❌ |
+| Feature selection needed | ❌ | ✅ |
+| Small dataset | ❌ | ✅ |
+| Avoiding high variance | ✅ | ❌ |
+ 
